@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "757695025870",
+    "project_id": "bu-elearn",
+    "storage_bucket": "bu-elearn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757695025870:android:2b94c052da6aaac54b369f",
+        "android_client_info": {
+          "package_name": "com.elearn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757695025870-s3nc1ckgalb0cmtb9q155jkue5mu8qu7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW2I1zm_iREAQ4yJ1wV9HnNgluOV599rg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757695025870-s3nc1ckgalb0cmtb9q155jkue5mu8qu7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
