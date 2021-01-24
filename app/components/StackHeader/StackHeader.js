@@ -10,7 +10,7 @@ import styles from './styles'
 const StackHeader = ({
   headerTitle = 'Title',
   headerTextInput = false,
-  textInputProps = Object,
+  textInputProps = {},
 }) => {
   const { goBack } = useNavigation()
   const { theme } = useTheme()

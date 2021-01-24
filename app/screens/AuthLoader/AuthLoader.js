@@ -8,17 +8,9 @@ import styles from './styles'
 const AuthLoader = () => {
   const { theme } = useTheme()
   return (
-    <View style={styles.root}>
-      <Avatar.Icon
-        size={100}
-        icon="bookshelf"
-        style={{
-          backgroundColor: theme.colors.primary,
-        }}
-      />
-      <Text style={[styles.title, { color: theme.colors.primary }]}>
-        eLearn
-      </Text>
+    <View style={[styles.root, { backgroundColor: theme.colors.background }]}>
+      <Avatar.Icon size={100} icon="bookshelf" />
+      <Text style={styles.title}>eLearn</Text>
       <Text style={styles.text}>A new way to learn!</Text>
 
       <ActivityIndicator

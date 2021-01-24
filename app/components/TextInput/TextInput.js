@@ -30,6 +30,7 @@ export default function ({
         />
         <TextInput
           ref={textInput}
+          placeholderTextColor={theme.colors.primary}
           style={[
             {
               color: theme.colors.primary,
@@ -37,7 +38,7 @@ export default function ({
                 containerSize -
                 styleObj.paddingHorizontal * 2 -
                 leftIconSize -
-                24,
+                (rightIcon ? 24 : 0),
             },
             styles.textInput,
             textInputStyle,

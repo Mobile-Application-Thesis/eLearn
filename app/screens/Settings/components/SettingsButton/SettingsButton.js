@@ -12,6 +12,7 @@ const SettingsButton = ({
   switchButton = false,
   value = Boolean,
   onPress = Function,
+  ...rest
 }) => {
   const { theme } = useTheme()
 
@@ -23,6 +24,7 @@ const SettingsButton = ({
             icon={icon}
             size={theme.icons.size.small}
             style={[{ backgroundColor: theme.colors.border }, iconStyle]}
+            {...rest}
           />
           <Text style={styles.buttonText}>{label}</Text>
         </View>

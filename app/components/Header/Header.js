@@ -3,42 +3,51 @@ import { TouchableOpacity, View } from 'react-native'
 import { Avatar, Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
 
-import { useAuth } from 'eLearn/app/contexts/AuthProvider'
 import { useTheme } from 'eLearn/app/contexts/ThemeProvider'
 import styles from './styles'
 
-const Header = ({ headerTitle = 'Header Title', rightActions = Array }) => {
-  const { userCredentials } = useAuth()
+const Header = ({ headerTitle = 'Header Title', rightActions = [] }) => {
   const { theme } = useTheme()
   const { navigate } = useNavigation()
 
   return (
     <View style={styles.root}>
       <View style={styles.leftContainer}>
-        <TouchableOpacity onPress={() => navigate('Settings')}>
-          <Avatar.Image
-            size={theme.icons.size.small}
-            source={{ uri: userCredentials.photoUrl }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>{headerTitle}</Text>
+        <Text style={[styles.headerTitle, { color: theme.colors.primary }]}>
+          {headerTitle}
+        </Text>
       </View>
 
       <View style={styles.rightContainer}>
-        {rightActions.map(({ style, ...rest }) => (
+        <TouchableOpacity onPress={() => navigate('Settings')}>
           <Avatar.Icon
-            key={rest.icon}
             size={theme.icons.size.small}
             color={theme.colors.primary}
+            icon="cog-outline"
             style={[
               styles.button,
               {
                 backgroundColor: theme.colors.border,
               },
-              style,
             ]}
-            {...rest}
           />
+        </TouchableOpacity>
+        {rightActions.map(({ style, onPress, ...rest }) => (
+          <TouchableOpacity onPress={onPress}>
+            <Avatar.Icon
+              key={rest.icon}
+              size={theme.icons.size.small}
+              color={theme.colors.primary}
+              style={[
+                styles.button,
+                {
+                  backgroundColor: theme.colors.border,
+                },
+                style,
+              ]}
+              {...rest}
+            />
+          </TouchableOpacity>
         ))}
       </View>
     </View>

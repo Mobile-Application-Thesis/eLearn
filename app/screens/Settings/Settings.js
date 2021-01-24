@@ -16,8 +16,9 @@ const Settings = () => {
       key: 'darkMode',
       label: 'Dark Mode',
       icon: 'theme-light-dark',
+      color: '#fff',
       iconStyle: {
-        backgroundColor: !darkMode ? theme.colors.primary : theme.colors.border,
+        backgroundColor: darkMode ? theme.colors.border : theme.colors.text,
       },
       switchButton: true,
       value: darkMode,
@@ -59,7 +60,7 @@ const Settings = () => {
 
   return (
     <View style={styles.root}>
-      <StackHeader headerTitle="Me" />
+      <StackHeader headerTitle="Settings" />
       <FlatList
         ListHeaderComponent={() => (
           <View style={styles.profileContainer}>
@@ -67,7 +68,7 @@ const Settings = () => {
               size={100}
               icon="bookshelf"
               style={{
-                backgroundColor: theme.colors.blue,
+                backgroundColor: '#2f426f',
               }}
             />
             <Text style={styles.profileText}>

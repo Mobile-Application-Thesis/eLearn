@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity, Pressable, Image } from 'react-native'
+import { View, TouchableOpacity, Image } from 'react-native'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -8,7 +8,7 @@ import { emailRegex } from 'eLearn/app/constants/regex'
 import { useTheme } from 'eLearn/app/contexts/ThemeProvider'
 import { useAuth } from 'eLearn/app/contexts/AuthProvider'
 import { useForm } from 'eLearn/app/contexts/FormAuthProvider'
-import { TextInput } from 'eLearn/app/components'
+import { TextInput, Button } from 'eLearn/app/components'
 import { SignInForm } from 'eLearn/app/constants/forms'
 
 import professorImage from 'eLearn/app/assets/undraw_professor.png'
@@ -69,11 +69,11 @@ const SignIn = ({ navigation }) => {
 
         <View style={styles.breakLine} />
         <View style={styles.breakLine} />
-        <Pressable
+        <Button
           style={[styles.button]}
           onPress={() => handleSubmit(signIn.bind(this, formInput), callback)}>
           <Text style={[styles.buttonText]}>Sign In</Text>
-        </Pressable>
+        </Button>
       </View>
 
       <View style={styles.breakLine} />

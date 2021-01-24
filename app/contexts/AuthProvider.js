@@ -49,6 +49,7 @@ const AuthProvider = ({ children }) => {
 
   const signUp = async ({ fullName, username, email, password }) => {
     setInitializing(true)
+    setWizard(true)
 
     const response = await FirebaseService.signUp({
       fullName,
@@ -57,7 +58,6 @@ const AuthProvider = ({ children }) => {
       password,
     })
     setInitializing(false)
-    setWizard(true)
 
     if (!response.user) {
       ErrorHandler(response)

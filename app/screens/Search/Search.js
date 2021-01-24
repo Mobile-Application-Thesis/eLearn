@@ -1,14 +1,16 @@
 import React from 'react'
-import { View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { View, FlatList } from 'react-native'
 
-import { StackHeader } from 'eLearn/app/components'
+import { StackHeader, EmptyList } from 'eLearn/app/components'
 
 const Search = () => {
   return (
     <View>
       <StackHeader headerTextInput={true} />
-      <Text>Search</Text>
+      <FlatList
+        data={[]}
+        ListEmptyComponent={() => <EmptyList title="Feature not available!" />}
+      />
     </View>
   )
 }
