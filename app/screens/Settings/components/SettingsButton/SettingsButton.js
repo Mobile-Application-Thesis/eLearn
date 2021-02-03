@@ -6,12 +6,13 @@ import { useTheme } from 'eLearn/app/contexts/ThemeProvider'
 import styles from './styles'
 
 const SettingsButton = ({
-  label = String,
-  icon = String,
-  iconStyle = Object,
+  label = '',
+  icon = '',
+  iconStyle = {},
   switchButton = false,
-  value = Boolean,
-  onPress = Function,
+  value = false,
+  onPress = () => {},
+  ...rest
 }) => {
   const { theme } = useTheme()
 
@@ -23,10 +24,11 @@ const SettingsButton = ({
             icon={icon}
             size={theme.icons.size.small}
             style={[{ backgroundColor: theme.colors.border }, iconStyle]}
+            {...rest}
           />
           <Text style={styles.buttonText}>{label}</Text>
         </View>
-        {switchButton && <Switch disabled={true} value={value} />}
+        {switchButton && <Switch onValueChange={onPress} value={value} />}
       </>
     </TouchableRipple>
   )

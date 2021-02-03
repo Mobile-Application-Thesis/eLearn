@@ -13,6 +13,9 @@ export const useTheme = () => useContext(ThemeContext)
 
 const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useAsyncStorage('darkMode', false)
+  const [gridView, setGridView] = useAsyncStorage('gridView', false)
+
+  const toggleGridView = () => setGridView(!gridView)
 
   const toggleDarkMode = () => setDarkMode(!darkMode)
 
@@ -22,7 +25,14 @@ const ThemeProvider = ({ children }) => {
     <PaperProvider theme={theme}>
       <Portal>
         <NavigationContainer theme={theme}>
-          <ThemeContext.Provider value={{ darkMode, toggleDarkMode, theme }}>
+          <ThemeContext.Provider
+            value={{
+              darkMode,
+              toggleDarkMode,
+              theme,
+              gridView,
+              toggleGridView,
+            }}>
             <StatusBar
               backgroundColor={theme.colors.background}
               barStyle={darkMode ? 'light-content' : 'dark-content'}

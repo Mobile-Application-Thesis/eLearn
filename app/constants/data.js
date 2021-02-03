@@ -1,5 +1,5 @@
 module.exports = {
-  userType: {
+  userRole: {
     student: 'student',
     teacher: 'teacher',
   },

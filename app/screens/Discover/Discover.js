@@ -1,21 +1,18 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, FlatList } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
 
+import { Header, EmptyList } from 'eLearn/app/components'
 import styles from './styles'
 
-import { Header } from 'eLearn/app/components'
-
 const Discover = () => {
+  const { navigate } = useNavigation()
   const headerProps = {
     headerTitle: 'Discover',
     rightActions: [
       {
-        icon: 'account-plus',
-        onPress: () => {},
-      },
-      {
-        icon: 'book-account',
-        onPress: () => {},
+        icon: 'magnify',
+        onPress: () => navigate('Search'),
       },
     ],
   }
@@ -23,6 +20,10 @@ const Discover = () => {
   return (
     <View style={styles.root}>
       <Header {...headerProps} />
+      <FlatList
+        data={[]}
+        ListEmptyComponent={() => <EmptyList />}
+      />
     </View>
   )
 }

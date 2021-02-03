@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+  TransitionPresets,
+} from '@react-navigation/stack'
 
 import { mainStack, authStack, wizardStack } from 'eLearn/app/constants/routes'
 import { useAuth } from '../contexts/AuthProvider'
@@ -39,7 +43,13 @@ const MainStack = () => {
   }
 
   return (
-    <Stack.Navigator initialRouteName={initialRouteName}>
+    <Stack.Navigator
+      initialRouteName={initialRouteName}
+      headerMode="float"
+      animation="fade"
+      screenOptions={{
+        ...TransitionPresets.SlideFromRightIOS,
+      }}>
       {stack.map(({ name, ...rest }) => (
         <Stack.Screen key={name} name={name} {...rest} />
       ))}

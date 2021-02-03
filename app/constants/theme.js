@@ -34,6 +34,7 @@ const DarkTheme = {
     primary: '#fff',
     blue: '#1e90ea',
     backHue: '#737373',
+    background: '#181818',
   },
   icons: {
     size: {
