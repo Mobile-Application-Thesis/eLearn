@@ -12,6 +12,7 @@ export default function ({
   textInputStyle = {},
   rightIcon = {},
   leftIcon = {},
+  multiline = false,
   ...rest
 }) {
   const { theme } = useTheme()
@@ -22,7 +23,13 @@ export default function ({
     <TouchableWithoutFeedback onPress={() => textInput.current.focus()}>
       <View
         onLayout={(e) => setContainerSize(e.nativeEvent.layout.width)}
-        style={[styles.root, containerStyle]}
+        style={[
+          styles.root,
+          containerStyle,
+          {
+            alignItems: multiline ? 'flex-start' : 'center',
+          },
+        ]}
         {...containerProps}>
         <Icon
           onLayout={(e) => setLeftIconSize(e.nativeEvent.layout.width)}
@@ -43,9 +50,12 @@ export default function ({
             styles.textInput,
             textInputStyle,
           ]}
+          multiline={multiline}
           {...rest}
         />
-        <Icon {...rightIcon} />
+        <View style={{ paddingTop: multiline ? 8 : 0 }}>
+          <Icon {...rightIcon} />
+        </View>
       </View>
     </TouchableWithoutFeedback>
   )

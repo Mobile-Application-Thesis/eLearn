@@ -4,7 +4,7 @@ export default StyleSheet.create({
   root: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: '20%',
+    paddingTop: '35%',
   },
   image: {
     width: 300,

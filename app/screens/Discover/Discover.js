@@ -22,7 +22,7 @@ const Discover = () => {
       <Header {...headerProps} />
       <FlatList
         data={[]}
-        ListEmptyComponent={() => <EmptyList title="Feature not available!" />}
+        ListEmptyComponent={() => <EmptyList />}
       />
     </View>
   )

@@ -17,10 +17,18 @@ const StackHeader = ({
 
   return (
     <Appbar.Header style={[{ backgroundColor: theme.colors.background }]}>
-      <Appbar.Action icon="arrow-left" onPress={goBack} />
+      <Appbar.Action
+        icon="arrow-left"
+        onPress={goBack}
+        color={theme.colors.primary}
+      />
 
       {!headerTextInput ? (
-        <Appbar.Content title={headerTitle} style={styles.title} />
+        <Appbar.Content
+          title={headerTitle}
+          style={styles.title}
+          color={theme.colors.primary}
+        />
       ) : (
         <TextInput
           placeholder="Search"

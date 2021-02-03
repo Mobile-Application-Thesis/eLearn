@@ -79,6 +79,11 @@ class Firebase {
       username,
       fullName,
       email,
+      role: '',
+      birthday: '',
+      address: '',
+      country: '',
+      status: '',
     }
 
     return this.setFBDoc({
@@ -190,41 +195,20 @@ class Firebase {
       .where(key, '==', value)
   }
 
-  addFBData({ values, doc, endCollection, parentCollection = 'users' } = {}) {
-    const [authError] = this.checkAuthorization()
-
-    if (authError) {
-      return [authError]
-    }
-
+  addFBData({ values, doc, collection = 'users' } = {}) {
     return this.db
-      .collection(parentCollection)
+      .collection(collection)
       .doc(doc || this.auth.currentUser.uid)
-      .collection(endCollection)
       .add(values)
   }
 
-  updateFBData({
-    values,
-    doc,
-    endCollection,
-    parentCollection = 'users',
-  } = {}) {
-    const { id } = values
-    const [authError] = this.checkAuthorization()
-
-    if (authError) {
-      return [authError]
-    }
-
+  updateFBData({ values, doc, collection = 'users' } = {}) {
     const clone = { ...values }
     delete clone.id
 
     return this.db
-      .collection(parentCollection)
+      .collection(collection)
       .doc(doc || this.auth.currentUser.uid)
-      .collection(endCollection)
-      .doc(id)
       .update({
         ...clone,
       })

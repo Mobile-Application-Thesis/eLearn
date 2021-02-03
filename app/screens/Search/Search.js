@@ -9,7 +9,7 @@ const Search = () => {
       <StackHeader headerTextInput={true} />
       <FlatList
         data={[]}
-        ListEmptyComponent={() => <EmptyList title="Feature not available!" />}
+        ListEmptyComponent={() => <EmptyList />}
       />
     </View>
   )

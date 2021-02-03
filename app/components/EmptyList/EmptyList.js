@@ -8,7 +8,7 @@ import professorImage from 'eLearn/app/assets/undraw_faq.png'
 
 const EmptyList = ({
   image = professorImage,
-  title = 'Empty list default title',
+  title = 'Feature not yet available!',
 }) => {
   return (
     <View style={styles.root}>

@@ -4,6 +4,7 @@ import SimpleToast from 'react-native-simple-toast'
 import { FirebaseService } from 'eLearn/app/services/firebase.services'
 import ErrorHandler from 'eLearn/app/utils/errorHandler'
 import { useAsyncStorage } from 'eLearn/app/hooks'
+import { useProfile } from '../hooks'
 
 const AuthContext = createContext({})
 
@@ -16,16 +17,15 @@ const AuthProvider = ({ children }) => {
   )
   const [wizard, setWizard, wizardFromStorage] = useAsyncStorage(
     'wizard',
-    false,
+    true,
   )
-  const [userCredentials, setUserCredentials] = useState({})
+  const [userCredentials, setUserCredentials] = useProfile()
   const [initializing, setInitializing] = useState(false)
 
   useEffect(() => {
     const unsubscribe = FirebaseService.auth.onAuthStateChanged((user) => {
       if (user) {
         setLoggedIn(true)
-        setUserCredentials(user)
       }
     })
     return unsubscribe
@@ -61,15 +61,12 @@ const AuthProvider = ({ children }) => {
 
     if (!response.user) {
       ErrorHandler(response)
-    } else {
-      SimpleToast.show(`Welcome ${response.user.displayName}`)
     }
   }
 
   const signOut = async () => {
-    await FirebaseService.signOut()
-    setUserCredentials({})
     setLoggedIn(false)
+    await FirebaseService.signOut()
   }
 
   return (
@@ -85,6 +82,7 @@ const AuthProvider = ({ children }) => {
         wizard,
         wizardFromStorage,
         setWizard,
+        setUserCredentials,
       }}>
       {children}
     </AuthContext.Provider>
