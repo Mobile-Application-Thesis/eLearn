@@ -13,9 +13,6 @@ export const useTheme = () => useContext(ThemeContext)
 
 const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useAsyncStorage('darkMode', false)
-  const [gridView, setGridView] = useAsyncStorage('gridView', false)
-
-  const toggleGridView = () => setGridView(!gridView)
 
   const toggleDarkMode = () => setDarkMode(!darkMode)
 
@@ -30,8 +27,6 @@ const ThemeProvider = ({ children }) => {
               darkMode,
               toggleDarkMode,
               theme,
-              gridView,
-              toggleGridView,
             }}>
             <StatusBar
               backgroundColor={theme.colors.background}

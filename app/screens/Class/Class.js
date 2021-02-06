@@ -2,30 +2,46 @@ import React, { useEffect, useState } from 'react'
 import { View, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 
-import styles from './styles'
-
+import { FirebaseService } from 'eLearn/app/services/firebase.services'
 import { Header, EmptyList, FloatingButton } from 'eLearn/app/components'
 import { useAuth } from 'eLearn/app/contexts/AuthProvider'
-import { useTheme } from 'eLearn/app/contexts/ThemeProvider'
 import { userRole } from 'eLearn/app/constants/data'
 import { ClassCard } from './components'
+import styles from './styles'
 
 const Class = () => {
   const headerProps = {
     headerTitle: 'E-Learn',
   }
-  const {
-    userCredentials: { role },
-  } = useAuth()
-  const { gridView } = useTheme()
+  const { user } = useAuth()
   const { navigate } = useNavigation()
   const [floatingButtonProps, setFloationButtonProps] = useState({
     onPress: () => {},
     name: 'button',
   })
+  const [classList, setClassList] = useState([])
 
   useEffect(() => {
-    if (role === userRole.teacher) {
+    if (user && user.role) {
+      const unsubscribe = FirebaseService.getFBCollectionWhere({
+        key: user.role,
+        operator: 'array-contains',
+        collection: 'class',
+        value: user.id,
+      }).onSnapshot((snapshot) => {
+        var temp = []
+        snapshot.forEach((doc) => {
+          temp.push({ id: doc.id, ...doc.data() })
+        })
+        setClassList(temp)
+      })
+
+      return unsubscribe
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (user && user.role === userRole.teacher) {
       setFloationButtonProps({
         onPress: () => navigate('CreateClass'),
         name: 'Create a class',
@@ -36,18 +52,16 @@ const Class = () => {
         name: 'Join a Class',
       })
     }
-  }, [role])
+  }, [user])
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root]}>
       <Header {...headerProps} />
       <FloatingButton {...floatingButtonProps} />
-
       <FlatList
-        key={gridView ? 'grid' : 'vertical'}
-        numColumns={gridView ? 2 : 1}
-        data={tempData}
-        renderItem={({ item }) => <ClassCard key={item.id} item={item} />}
+        contentContainerStyle={{ marginHorizontal: 10, marginVertical: 10 }}
+        data={classList}
+        renderItem={({ item }) => <ClassCard key={item.id} {...item} />}
         ListEmptyComponent={() => (
           <EmptyList title="You don't have any class yet!" />
         )}
@@ -55,12 +69,5 @@ const Class = () => {
     </View>
   )
 }
-
-const tempData = [
-  {
-    id: 1,
-    content: 'test 1',
-  },
-]
 
 export default Class

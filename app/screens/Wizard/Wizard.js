@@ -10,7 +10,7 @@ import { WizardHeader } from './components'
 import styles from './styles'
 
 const Wizard = () => {
-  const { userCredentials } = useAuth()
+  const { user } = useAuth()
   const { navigate } = useNavigation()
   const { theme } = useTheme()
 
@@ -19,7 +19,7 @@ const Wizard = () => {
       <WizardHeader step="0" />
       <View style={styles.content}>
         <Text style={[styles.title, { color: theme.colors.primary }]}>
-          Welcome {userCredentials.fullName}!
+          Welcome {user.fullName}!
         </Text>
         <Text style={[styles.desc]}>
           We would like you to do some things first before proceeding on using

@@ -17,17 +17,20 @@ const AuthProvider = ({ children }) => {
   )
   const [wizard, setWizard, wizardFromStorage] = useAsyncStorage(
     'wizard',
-    true,
+    false,
   )
-  const [userCredentials, setUserCredentials] = useProfile()
+  const [user, setUser, updateUser] = useProfile()
   const [initializing, setInitializing] = useState(false)
 
   useEffect(() => {
-    const unsubscribe = FirebaseService.auth.onAuthStateChanged((user) => {
-      if (user) {
-        setLoggedIn(true)
-      }
-    })
+    const unsubscribe = FirebaseService.auth.onAuthStateChanged(
+      (currentUser) => {
+        if (currentUser) {
+          updateUser(currentUser.uid)
+          setLoggedIn(true)
+        }
+      },
+    )
     return unsubscribe
   }, [])
 
@@ -43,7 +46,7 @@ const AuthProvider = ({ children }) => {
     if (!response.user) {
       ErrorHandler(response)
     } else {
-      SimpleToast.show(`Welcome ${response.user.displayName}`)
+      SimpleToast.show(`Welcome back ${response.user.displayName}!`)
     }
   }
 
@@ -78,11 +81,11 @@ const AuthProvider = ({ children }) => {
         loggedIn,
         initializing,
         loggedInFromStorage,
-        userCredentials,
+        user,
         wizard,
         wizardFromStorage,
         setWizard,
-        setUserCredentials,
+        setUser,
       }}>
       {children}
     </AuthContext.Provider>

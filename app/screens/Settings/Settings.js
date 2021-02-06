@@ -9,14 +9,8 @@ import { SettingsButton } from './components'
 import styles from './styles'
 
 const Settings = () => {
-  const { userCredentials, signOut } = useAuth()
-  const {
-    darkMode,
-    toggleDarkMode,
-    theme,
-    gridView,
-    toggleGridView,
-  } = useTheme()
+  const { user, signOut } = useAuth()
+  const { darkMode, toggleDarkMode, theme } = useTheme()
   const flatListData = [
     {
       key: 'darkMode',
@@ -28,17 +22,6 @@ const Settings = () => {
       switchButton: true,
       value: darkMode,
       onPress: toggleDarkMode,
-    },
-    {
-      key: 'view',
-      label: 'Class Grid View',
-      icon: 'view-grid',
-      iconStyle: {
-        backgroundColor: theme.colors.border,
-      },
-      switchButton: true,
-      value: gridView,
-      onPress: toggleGridView,
     },
     {
       key: 'profile',
@@ -114,8 +97,8 @@ const Settings = () => {
                 backgroundColor: '#2f426f',
               }}
             />
-            <Text style={styles.profileText}>{userCredentials.fullName}</Text>
-            <Text>{userCredentials.email}</Text>
+            <Text style={styles.profileText}>{user.fullName}</Text>
+            <Text>{user.email}</Text>
           </View>
         )}
         data={flatListData}

@@ -11,7 +11,7 @@ const Header = ({ headerTitle = 'Header Title', rightActions = [] }) => {
   const { navigate } = useNavigation()
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, { backgroundColor: theme.colors.background }]}>
       <View style={styles.leftContainer}>
         <Text style={[styles.headerTitle, { color: theme.colors.primary }]}>
           {headerTitle}

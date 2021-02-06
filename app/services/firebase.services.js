@@ -143,25 +143,18 @@ class Firebase {
       .catch((error) => ({ error }))
   }
 
-  getFBCollectionData({
-    endCollection,
-    parentCollection = 'users',
-    parentDoc,
-  } = {}) {
+  getFBCollectionData({ collection = 'users' } = {}) {
     const [authError] = this.checkAuthorization()
 
     if (authError) {
       return [authError]
     }
 
-    return this.db
-      .collection(parentCollection)
-      .doc(parentDoc || this.auth.currentUser.uid)
-      .collection(endCollection)
+    return this.db.collection(collection)
   }
 
   getFBCollectionWhere = ({
-    parentCollection = 'users',
+    collection = 'users',
     key,
     value,
     operator = '==',
@@ -172,7 +165,7 @@ class Firebase {
       return [authError]
     }
 
-    return this.db.collection(parentCollection).where(key, operator, value)
+    return this.db.collection(collection).where(key, operator, value)
   }
 
   getFBCollectionDataWhereBool({
@@ -214,7 +207,7 @@ class Firebase {
       })
   }
 
-  addFBDoc = ({ parentCollection = 'users', docData = {} } = {}) => {
+  addFBDoc = ({ collection = 'users', docData = {} } = {}) => {
     const [authError] = this.checkAuthorization()
 
     if (authError) {
@@ -222,10 +215,10 @@ class Firebase {
     }
 
     return this.db
-      .collection(parentCollection)
+      .collection(collection)
       .add(docData)
-      .then((res) => [null, res])
-      .catch((err) => [err])
+      .then((res) => ({ data: res }))
+      .catch((err) => err)
   }
 
   setFBDoc = ({ parentCollection = 'users', doc, docData = {} } = {}) => {
