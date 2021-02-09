@@ -30,7 +30,7 @@ const Settings = () => {
       iconStyle: {
         backgroundColor: theme.colors.border,
       },
-      onPress: () => {},
+      onPress: Function.prototype,
     },
     {
       key: 'term&cond',
@@ -39,7 +39,7 @@ const Settings = () => {
       iconStyle: {
         backgroundColor: theme.colors.border,
       },
-      onPress: () => {},
+      onPress: Function.prototype,
     },
     {
       key: 'privacyPolicy',
@@ -48,7 +48,7 @@ const Settings = () => {
       iconStyle: {
         backgroundColor: theme.colors.border,
       },
-      onPress: () => {},
+      onPress: Function.prototype,
     },
     {
       key: 'about',
@@ -57,7 +57,7 @@ const Settings = () => {
       iconStyle: {
         backgroundColor: theme.colors.border,
       },
-      onPress: () => {},
+      onPress: Function.prototype,
     },
     {
       key: 'signOut',

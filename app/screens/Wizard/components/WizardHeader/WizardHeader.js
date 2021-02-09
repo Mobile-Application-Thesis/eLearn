@@ -29,16 +29,12 @@ const WizardHeader = ({ step }) => {
       )}
       <View style={styles.stepsContainer}>
         <Image
-          source={
-            step === '0' || step === '1' || step === '2'
-              ? radioButtonChecked
-              : radioButtonUnchecked
-          }
+          source={radioButtonChecked}
           style={[styles.radio, { tintColor: theme.colors.primary }]}
         />
         <Image
           source={
-            step === '1' || step === '2'
+            ['1', '2'].includes(step)
               ? radioButtonChecked
               : radioButtonUnchecked
           }

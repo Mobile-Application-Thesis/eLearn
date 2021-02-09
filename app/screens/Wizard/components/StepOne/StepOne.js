@@ -14,14 +14,14 @@ import styles from './styles'
 const StepOne = () => {
   const { navigate } = useNavigation()
   const { theme } = useTheme()
-  const { setUser } = useAuth()
+  const { updateUser } = useAuth()
   const [role, setRole] = useState('')
   const [error, setError] = useState(false)
 
   const action = (value) => {
     setRole(value)
     setError(false)
-    setUser({ role: value })
+    updateUser({ role: value })
   }
 
   const nextStep = () => {

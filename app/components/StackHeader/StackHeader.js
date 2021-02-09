@@ -2,16 +2,13 @@ import React from 'react'
 import { Appbar } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
 import { TextInput } from 'react-native'
+import PropTypes from 'prop-types'
 
 import { useTheme } from 'eLearn/app/contexts/ThemeProvider'
 
 import styles from './styles'
 
-const StackHeader = ({
-  headerTitle = 'Title',
-  headerTextInput = false,
-  textInputProps = {},
-}) => {
+const StackHeader = ({ headerTitle, headerTextInput, textInputProps }) => {
   const { goBack } = useNavigation()
   const { theme } = useTheme()
 
@@ -44,6 +41,18 @@ const StackHeader = ({
       )}
     </Appbar.Header>
   )
+}
+
+StackHeader.propTypes = {
+  headerTitle: PropTypes.string,
+  headerTextInput: PropTypes.bool,
+  textInputProps: PropTypes.instanceOf(Object),
+}
+
+StackHeader.defaultProps = {
+  headerTitle: 'Title',
+  headerTextInput: false,
+  textInputProps: {},
 }
 
 export default StackHeader

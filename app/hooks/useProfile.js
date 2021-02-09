@@ -22,9 +22,9 @@ const useProfile = (id) => {
     }
   }, [])
 
-  const setData = (data) => FirebaseService.updateFBData({ values: data })
+  const updateUser = (data) => FirebaseService.updateFBData({ values: data })
 
-  const updateUser = (uid) =>
+  const setUser = (uid) =>
     FirebaseService.db
       .collection('users')
       .doc(uid)
@@ -40,7 +40,7 @@ const useProfile = (id) => {
         console.log('Error getting document:', error)
       })
 
-  return [userProfile, setData, updateUser]
+  return [userProfile, updateUser, setUser]
 }
 
 export default useProfile

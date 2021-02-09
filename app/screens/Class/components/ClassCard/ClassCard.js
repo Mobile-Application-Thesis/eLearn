@@ -6,6 +6,7 @@ import SimpleToast from 'react-native-simple-toast'
 import { ImageBackground } from 'react-native'
 import { Icon } from 'react-native-elements'
 import cardBackground from 'eLearn/app/assets/class-card-background.jpg'
+import PropTypes from 'prop-types'
 
 import { useAuth } from 'eLearn/app/contexts/AuthProvider'
 import { useTheme } from 'eLearn/app/contexts/ThemeProvider'
@@ -94,6 +95,19 @@ const ClassCard = ({ id, name, description, classCode, status, teacher }) => {
       </View>
     </ImageBackground>
   )
+}
+
+ClassCard.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  classCode: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  teacher: PropTypes.array.isRequired,
+}
+
+ClassCard.defaultProps = {
+  description: '',
 }
 
 export default ClassCard

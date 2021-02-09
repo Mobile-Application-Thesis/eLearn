@@ -19,14 +19,14 @@ const AuthProvider = ({ children }) => {
     'wizard',
     false,
   )
-  const [user, setUser, updateUser] = useProfile()
+  const [user, updateUser, setUser] = useProfile()
   const [initializing, setInitializing] = useState(false)
 
   useEffect(() => {
     const unsubscribe = FirebaseService.auth.onAuthStateChanged(
       (currentUser) => {
         if (currentUser) {
-          updateUser(currentUser.uid)
+          setUser(currentUser.uid)
           setLoggedIn(true)
         }
       },
@@ -85,7 +85,7 @@ const AuthProvider = ({ children }) => {
         wizard,
         wizardFromStorage,
         setWizard,
-        setUser,
+        updateUser,
       }}>
       {children}
     </AuthContext.Provider>

@@ -16,7 +16,7 @@ const Class = () => {
   const { user } = useAuth()
   const { navigate } = useNavigation()
   const [floatingButtonProps, setFloationButtonProps] = useState({
-    onPress: () => {},
+    onPress: Function.prototype,
     name: 'button',
   })
   const [classList, setClassList] = useState([])
@@ -48,7 +48,7 @@ const Class = () => {
       })
     } else {
       setFloationButtonProps({
-        onPress: () => {},
+        onPress: Function.prototype,
         name: 'Join a Class',
       })
     }

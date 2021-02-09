@@ -2,11 +2,12 @@ import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { Avatar, Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
+import PropTypes from 'prop-types'
 
 import { useTheme } from 'eLearn/app/contexts/ThemeProvider'
 import styles from './styles'
 
-const Header = ({ headerTitle = 'Header Title', rightActions = [] }) => {
+const Header = ({ headerTitle, rightActions }) => {
   const { theme } = useTheme()
   const { navigate } = useNavigation()
 
@@ -52,6 +53,16 @@ const Header = ({ headerTitle = 'Header Title', rightActions = [] }) => {
       </View>
     </View>
   )
+}
+
+Header.propTypes = {
+  headerTitle: PropTypes.string,
+  rightActions: PropTypes.array,
+}
+
+Header.defaultProps = {
+  headerTitle: 'Header Title',
+  rightActions: [],
 }
 
 export default Header
