@@ -28,7 +28,7 @@ class Firebase {
     })
   }
 
-  checkAuthorization = () => {
+  checkAuthorization() {
     if (!this.auth.currentUser) {
       return [
         '[error/unauthorized] You are unauthorized to perform any operation. Please login and try again.',
@@ -159,12 +159,6 @@ class Firebase {
     value,
     operator = '==',
   } = {}) => {
-    const [authError] = this.checkAuthorization()
-
-    if (authError) {
-      return [authError]
-    }
-
     return this.db.collection(collection).where(key, operator, value)
   }
 
@@ -195,13 +189,17 @@ class Firebase {
       .add(values)
   }
 
-  updateFBData({ values, doc, collection = 'users' } = {}) {
+  updateFBData({
+    values,
+    doc = this.auth.currentUser.uid,
+    collection = 'users',
+  } = {}) {
     const clone = { ...values }
     delete clone.id
 
     return this.db
       .collection(collection)
-      .doc(doc || this.auth.currentUser.uid)
+      .doc(doc)
       .update({
         ...clone,
       })
