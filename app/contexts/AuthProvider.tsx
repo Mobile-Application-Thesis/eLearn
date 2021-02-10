@@ -5,38 +5,9 @@ import { FirebaseService } from '../services/firebase.services'
 import ErrorHandler from '../utils/errorHandler'
 import { useAsyncStorage } from '../hooks'
 import { useProfile } from '../hooks'
+import { AuthContextTypes } from './types'
 
-interface Context {
-  signIn?: ({
-    email,
-    password,
-  }: {
-    email: string
-    password: string
-  }) => Promise<void>
-  signUp?: ({
-    fullName,
-    username,
-    email,
-    password,
-  }: {
-    fullName: string
-    username: string
-    email: string
-    password: string
-  }) => Promise<void>
-  signOut?: () => Promise<void>
-  loggedIn?: boolean
-  initializing?: boolean
-  loggedInFromStorage?: boolean
-  user?
-  wizard?: boolean
-  wizardFromStorage?: boolean
-  setWizard?: (value: any) => Promise<void>
-  updateUser?: (data: object) => any
-}
-
-const AuthContext = createContext<Context>({})
+const AuthContext = createContext<AuthContextTypes>({})
 
 export const useAuth = () => useContext(AuthContext)
 

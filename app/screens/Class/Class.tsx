@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { View, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
+import { View, FlatList } from 'react-native'
 
 import { FirebaseService } from '../../services/firebase.services'
 import { Header, EmptyList, FloatingButton } from '../../components'
@@ -44,7 +44,7 @@ const Class = () => {
     if (user && user.role === constants.userRole.teacher) {
       setFloationButtonProps({
         onPress: () => navigate('CreateClass'),
-        name: 'Create a class',
+        name: 'Create a Class',
       })
     } else {
       setFloationButtonProps({

@@ -11,7 +11,8 @@ interface Styles {
 export default StyleSheet.create<Styles>({
   root: {
     paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingLeft: 10,
+    paddingRight: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -29,6 +30,6 @@ export default StyleSheet.create<Styles>({
     fontWeight: '700',
   },
   button: {
-    marginLeft: 20,
+    marginLeft: 15,
   },
 })

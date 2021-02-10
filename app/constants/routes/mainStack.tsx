@@ -1,7 +1,8 @@
-import HomeTab from 'eLearn/app/routes/HomeTab'
-import Search from 'eLearn/app/screens/Search'
-import Settings from 'eLearn/app/screens/Settings'
-import { CreateClass } from 'eLearn/app/screens/Class/components'
+import HomeTab from '../../routes/HomeTab'
+import Search from '../../screens/Search'
+import Settings from '../../screens/Settings'
+import { CreateClass } from '../../screens/Class/components'
+import ClassroomTab from '../../routes/ClassroomTab'
 
 const mainStack = [
   {
@@ -28,6 +29,13 @@ const mainStack = [
   {
     name: 'CreateClass',
     component: CreateClass,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: 'Classroom',
+    component: ClassroomTab,
     options: {
       headerShown: false,
     },

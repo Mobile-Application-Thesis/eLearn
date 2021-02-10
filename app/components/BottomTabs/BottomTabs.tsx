@@ -88,17 +88,13 @@ const BottomTabs = ({ state, descriptors, navigation }) => {
               {options.icon && (
                 <Icon
                   {...options.icon}
-                  color={
-                    isFocused ? theme.colors.primary : theme.colors.backHue
-                  }
+                  color={isFocused ? theme.colors.primary : '#737373'}
                 />
               )}
               <Text
                 style={[
                   {
-                    color: isFocused
-                      ? theme.colors.primary
-                      : theme.colors.backHue,
+                    color: isFocused ? theme.colors.primary : '#737373',
                   },
                   styles.label,
                 ]}>

@@ -1,5 +1,5 @@
-import Class from 'eLearn/app/screens/Class'
-import Discover from 'eLearn/app/screens/Discover'
+import Class from '../../screens/Class'
+import Discover from '../../screens/Discover'
 
 const homeTab = [
   {

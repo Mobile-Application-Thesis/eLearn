@@ -1,24 +1,17 @@
 import React, { createContext, useContext, useState } from 'react'
+import { FormAuthContextTypes } from './types'
 
-interface Context {
-  formErrors?: object
-  setError?: (name: any) => void
-  clearError?: (name: any) => void
-  handleSubmit?: (next: any, callback: any) => void
-  reset?: () => void
-}
-
-const FormAuthContext = createContext<Context>({})
+const FormAuthContext = createContext<FormAuthContextTypes>({})
 
 export const useForm = () => useContext(FormAuthContext)
 
 const FormAuthProvider = ({ children }) => {
   const [formErrors, setFormErrors] = useState({})
 
-  const setError = (name) => {
+  const setError = (name: string) => {
     setFormErrors((prevState) => ({ ...prevState, [name]: true }))
   }
-  const clearError = (name) => {
+  const clearError = (name: string) => {
     const data = formErrors
     delete data[name]
     setFormErrors(data)
@@ -26,7 +19,7 @@ const FormAuthProvider = ({ children }) => {
 
   const reset = () => setFormErrors({})
 
-  const handleSubmit = (next, callback) => {
+  const handleSubmit = (next: () => {}, callback: () => {}) => {
     if (callback() && JSON.stringify(formErrors) === JSON.stringify({})) {
       next()
     } else {

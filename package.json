@@ -22,7 +22,7 @@
     "@react-native-firebase/messaging": "^10.1.0",
     "@react-native-firebase/storage": "^10.1.0",
     "@react-navigation/bottom-tabs": "^5.11.2",
-    "@react-navigation/core": "^5.14.4",
+    "@react-navigation/core": "^5.15.1",
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/material-bottom-tabs": "^5.3.10",
     "@react-navigation/native": "^5.8.10",

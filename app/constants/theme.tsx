@@ -15,7 +15,6 @@ const DefaultTheme = {
     ...NavigationDefaultTheme.colors,
     primary: '#2f426f',
     blue: '#1e90ea',
-    backHue: '#737373',
     background: '#fff',
   },
   icons: {
@@ -33,7 +32,6 @@ const DarkTheme = {
     ...NavigationDarkTheme.colors,
     primary: '#fff',
     blue: '#1e90ea',
-    backHue: '#737373',
     background: '#181818',
   },
   icons: {

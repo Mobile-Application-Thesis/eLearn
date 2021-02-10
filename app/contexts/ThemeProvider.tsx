@@ -6,14 +6,9 @@ import { Provider as PaperProvider, Portal } from 'react-native-paper'
 // Themes
 import { DarkTheme, DefaultTheme } from '../constants/theme'
 import useAsyncStorage from '../hooks/useAsyncStorage'
+import { ThemeContextTypes } from './types'
 
-interface Context {
-  theme?
-  darkMode?: boolean
-  toggleDarkMode?: () => any
-}
-
-const ThemeContext = createContext<Context>({})
+const ThemeContext = createContext<ThemeContextTypes>({})
 
 export const useTheme = () => useContext(ThemeContext)
 
@@ -36,7 +31,7 @@ const ThemeProvider = ({ children }) => {
             }}>
             <StatusBar
               backgroundColor={theme.colors.background}
-              barStyle={darkMode ? 'light-content' : 'dark-content'}
+              barStyle={theme.dark ? 'light-content' : 'dark-content'}
             />
             {children}
           </ThemeContext.Provider>
