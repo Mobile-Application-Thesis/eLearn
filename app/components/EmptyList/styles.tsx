@@ -10,7 +10,8 @@ const styles = StyleSheet.create<Styles>({
   root: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: '35%',
+    justifyContent: 'center',
+    marginTop: -50,
   },
   image: {
     width: 300,

@@ -46,16 +46,20 @@ export declare type FormAuthContextTypes = {
   reset: () => (value: React.SetStateAction<{}>) => void
 }
 
-declare type Attribs = {
-  fullName?: string
-  username?: string
+declare type signIn = {
+  email: string
+  password: string
+}
+declare type signUp = {
+  fullName: string
+  username: string
   email: string
   password: string
 }
 
 export declare type AuthContextTypes = {
-  signIn: ({ email, password }: Attribs) => Promise<void>
-  signUp: ({ fullName, username, email, password }: Attribs) => Promise<void>
+  signIn: ({ email, password }: signIn) => Promise<void>
+  signUp: ({ fullName, username, email, password }: signUp) => Promise<void>
   signOut: () => Promise<void>
   loggedIn: boolean
   initializing: boolean

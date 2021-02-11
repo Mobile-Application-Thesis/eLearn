@@ -5,11 +5,11 @@ import { View, FlatList } from 'react-native'
 import { FirebaseService } from '../../services/firebase.services'
 import { Header, EmptyList, FloatingButton } from '../../components'
 import { useAuth } from '../../contexts/AuthProvider'
-import constants from '../../constants/data'
+import data from '../../constants/data'
 import { ClassCard } from './components'
 import styles from './styles'
 
-const Class = () => {
+const Class: React.FC = () => {
   const headerProps = {
     headerTitle: 'E-Learn',
   }
@@ -41,7 +41,7 @@ const Class = () => {
   }, [user])
 
   useEffect(() => {
-    if (user && user.role === constants.userRole.teacher) {
+    if (user && user.role === data.role.teacher) {
       setFloationButtonProps({
         onPress: () => navigate('CreateClass'),
         name: 'Create a Class',
@@ -59,7 +59,11 @@ const Class = () => {
       <Header {...headerProps} />
       <FloatingButton {...floatingButtonProps} />
       <FlatList
-        contentContainerStyle={{ marginHorizontal: 10, marginVertical: 10 }}
+        contentContainerStyle={{
+          flexGrow: 1,
+          marginHorizontal: 10,
+          marginVertical: 10,
+        }}
         data={classList}
         renderItem={({ item }) => <ClassCard key={item.id} {...item} />}
         ListEmptyComponent={() => (

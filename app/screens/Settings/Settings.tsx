@@ -8,7 +8,7 @@ import { useTheme } from '../../contexts/ThemeProvider'
 import { SettingsButton } from './components'
 import styles from './styles'
 
-const Settings = () => {
+const Settings: React.FC = () => {
   const { user, signOut } = useAuth()
   const { darkMode, toggleDarkMode, theme } = useTheme()
   const flatListData = [
@@ -88,6 +88,7 @@ const Settings = () => {
     <View style={styles.root}>
       <StackHeader headerTitle="Settings" />
       <FlatList
+        contentContainerStyle={{ flexGrow: 1 }}
         ListHeaderComponent={() => (
           <View style={styles.profileContainer}>
             <Avatar.Icon

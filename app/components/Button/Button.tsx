@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Pressable } from 'react-native'
 
-const Button = ({ children, ...rest }: { children: JSX.Element } | any) => {
+const Button: React.FC<any> = ({ children, ...rest }) => {
   const [buttonSize, setButtonSize] = useState(0)
   return (
     <Pressable

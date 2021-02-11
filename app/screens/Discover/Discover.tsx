@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/core'
 import { Header, EmptyList } from '../../components'
 import styles from './styles'
 
-const Discover = () => {
+const Discover: React.FC = () => {
   const { navigate } = useNavigation()
   const headerProps = {
     headerTitle: 'Discover',

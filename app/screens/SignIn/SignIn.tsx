@@ -14,7 +14,7 @@ import { SignInForm } from '../../constants/forms'
 
 const professorImage = require('../../assets/undraw_professor.png')
 
-const SignIn = () => {
+const SignIn: React.FC = () => {
   const [formInput, setFormInput] = useState({
     email: '',
     password: '',
@@ -24,7 +24,7 @@ const SignIn = () => {
   const { theme } = useTheme()
   const { initializing, signIn } = useAuth()
 
-  const onChangeText = (name, value) => {
+  const onChangeText = (name: string, value: string) => {
     if (name === 'email') {
       emailRegex.test(value) ? clearError('email') : setError('email')
     }

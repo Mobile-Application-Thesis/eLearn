@@ -1,11 +1,11 @@
 import React from 'react'
+import { Text } from 'react-native-paper'
 import { Pressable, View, useWindowDimensions } from 'react-native'
 import { Icon } from 'react-native-elements'
-import { Text } from 'react-native-paper'
 import { useTheme } from '../../contexts/ThemeProvider'
 import styles from './styles'
 
-const BottomTabs = ({ state, descriptors, navigation }) => {
+const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
   const { theme } = useTheme()
   const { width } = useWindowDimensions()
   const focusedOptions = descriptors[state.routes[state.index].key].options

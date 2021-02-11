@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList, Image, View } from 'react-native'
 import { Text } from 'react-native-paper'
 
-import { Header } from '../../components'
+import { Header, EmptyList } from '../../components'
 import { classParams } from '../../routes/ClassroomTab'
 import { useTheme } from './../../contexts/ThemeProvider'
 import styles from './styles'
@@ -25,7 +25,7 @@ const Item: React.FC<ItemProps> = ({ fullName, avatar, id }) => {
           {fullName}
         </Text>
         <Text style={[styles.name, { marginLeft: 10 }]}>
-          {user.id === id && '( You )'}
+          {user.id === id && '( me )'}
         </Text>
       </View>
     </View>
@@ -43,6 +43,7 @@ const Members: React.FC = () => {
         <Text style={styles.className}>{name}</Text>
 
         <FlatList
+          contentContainerStyle={{ flexGrow: 1 }}
           data={students}
           ListHeaderComponent={
             <FlatList
@@ -54,17 +55,16 @@ const Members: React.FC = () => {
               }
               renderItem={({ item }) => <Item key={item.id} {...item} />}
               ListFooterComponent={
-                <Text
-                  style={[
-                    styles.title,
-                    { color: theme.colors.primary, marginTop: 30 },
-                  ]}>
+                <Text style={[styles.title, { color: theme.colors.primary }]}>
                   Students
                 </Text>
               }
             />
           }
           renderItem={({ item }) => <Item key={item.id} {...item} />}
+          ListEmptyComponent={
+            <EmptyList title="You don't have any student yet!" />
+          }
         />
       </View>
     </View>

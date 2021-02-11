@@ -14,7 +14,7 @@ interface Styles {
 
 export default StyleSheet.create<Styles>({
   root: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     padding: '10%',
   },

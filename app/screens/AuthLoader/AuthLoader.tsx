@@ -5,7 +5,7 @@ import { ActivityIndicator, Avatar, Text } from 'react-native-paper'
 import { useTheme } from '../../contexts/ThemeProvider'
 import styles from './styles'
 
-const AuthLoader = () => {
+const AuthLoader: React.FC = () => {
   const { theme } = useTheme()
   return (
     <View style={[styles.root, { backgroundColor: theme.colors.background }]}>

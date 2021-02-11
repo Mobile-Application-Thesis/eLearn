@@ -3,6 +3,7 @@ import Search from '../../screens/Search'
 import Settings from '../../screens/Settings'
 import { CreateClass } from '../../screens/Class/components'
 import ClassroomTab from '../../routes/ClassroomTab'
+import { CreateLesson } from './../../screens/Lesson/components'
 
 const mainStack = [
   {
@@ -36,6 +37,13 @@ const mainStack = [
   {
     name: 'Classroom',
     component: ClassroomTab,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: 'Create Lesson',
+    component: CreateLesson,
     options: {
       headerShown: false,
     },

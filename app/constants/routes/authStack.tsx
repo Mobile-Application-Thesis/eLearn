@@ -1,5 +1,5 @@
-import SignIn from 'eLearn/app/screens/SignIn'
-import SignUp from 'eLearn/app/screens/SignUp'
+import SignIn from '../../screens/SignIn'
+import SignUp from '../../screens/SignUp'
 
 const mainStack = [
   {

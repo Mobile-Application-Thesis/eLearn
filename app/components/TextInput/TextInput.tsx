@@ -21,6 +21,7 @@ interface Props {
   placeholder?: string
   secureTextEntry?: boolean
   value?: string
+  numberOfLines?: number
   onChangeText?: (text: string) => void
 }
 

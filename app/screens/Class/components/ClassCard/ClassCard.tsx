@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/core'
 
 import { useAuth } from '../../../../contexts/AuthProvider'
 import { useTheme } from '../../../../contexts/ThemeProvider'
-import constants from '../../../../constants/data'
+import data from '../../../../constants/data'
 import { useProfile } from '../../../../hooks'
 import styles from './styles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -60,7 +60,7 @@ const ClassCard: React.FC<Props> = (props) => {
           </View>
           <Text style={[styles.description]}>{description}</Text>
           <View style={styles.footer}>
-            {role === constants.userRole.teacher ? (
+            {role === data.role.teacher ? (
               <>
                 <View style={[styles.classCodeContainer]}>
                   <Text style={[styles.text]}>Class Code: </Text>

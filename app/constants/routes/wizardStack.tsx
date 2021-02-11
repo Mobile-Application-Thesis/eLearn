@@ -1,5 +1,5 @@
-import Wizard from 'eLearn/app/screens/Wizard'
-import { StepOne, StepTwo } from 'eLearn/app/screens/Wizard/components'
+import { Wizard } from '../../screens'
+import { StepOne, StepTwo } from '../../screens/Wizard/components'
 
 const wizardStack = [
   {

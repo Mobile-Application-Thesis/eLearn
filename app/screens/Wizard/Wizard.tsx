@@ -9,7 +9,9 @@ import { Button } from '../../components'
 import { WizardHeader } from './components'
 import styles from './styles'
 
-const Wizard = () => {
+interface Props {}
+
+const Wizard: React.FC<Props> = () => {
   const { user } = useAuth()
   const { navigate } = useNavigation()
   const { theme } = useTheme()

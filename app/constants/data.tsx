@@ -1,5 +1,5 @@
 const data = {
-  userRole: {
+  role: {
     student: 'student',
     teacher: 'teacher',
   },

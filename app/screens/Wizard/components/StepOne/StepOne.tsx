@@ -7,7 +7,7 @@ import { Icon } from 'react-native-elements'
 import { Button } from '../../../../components'
 import { useTheme } from '../../../../contexts/ThemeProvider'
 import { useAuth } from '../../../../contexts/AuthProvider'
-import constants from '../../../../constants/data'
+import data from '../../../../constants/data'
 import WizardHeader from '../WizardHeader'
 import styles from './styles'
 
@@ -43,9 +43,9 @@ const StepOne = () => {
         <View style={styles.buttonContainer}>
           <Button
             style={[styles.choices]}
-            onPress={action.bind(this, constants.userRole.student)}>
+            onPress={action.bind(this, data.role.student)}>
             <Text style={{ color: theme.colors.primary }}>Student</Text>
-            {role === constants.userRole.student && (
+            {role === data.role.student && (
               <Icon
                 name="check-bold"
                 type="material-community"
@@ -57,11 +57,11 @@ const StepOne = () => {
         <View style={styles.buttonContainer}>
           <Button
             style={[styles.choices]}
-            onPress={action.bind(this, constants.userRole.teacher)}>
+            onPress={action.bind(this, data.role.teacher)}>
             <Text style={{ color: theme.colors.primary }}>
               Teacher/Professor
             </Text>
-            {role === constants.userRole.teacher && (
+            {role === data.role.teacher && (
               <Icon
                 name="check-bold"
                 type="material-community"

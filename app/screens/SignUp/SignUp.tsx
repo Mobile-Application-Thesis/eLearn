@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity, Image } from 'react-native'
+import { View, TouchableOpacity, Image, FlatList } from 'react-native'
 import { ActivityIndicator, Text } from 'react-native-paper'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useNavigation } from '@react-navigation/core'
 
 import styles from './styles'
 import { emailRegex } from '../../constants/regex'
@@ -13,7 +13,7 @@ import { useForm } from '../../contexts/FormAuthProvider'
 
 const professorImage = require('../../assets/undraw_professor.png')
 
-const SignUp = ({ navigation }) => {
+const SignUp: React.FC = () => {
   const [formInput, setFormInput] = useState({
     name: '',
     password: '',
@@ -22,11 +22,12 @@ const SignUp = ({ navigation }) => {
     username: '',
     confirmPassword: '',
   })
+  const { navigate } = useNavigation()
   const { formErrors, setError, clearError, handleSubmit, reset } = useForm()
   const { theme } = useTheme()
   const { initializing, signUp } = useAuth()
 
-  const onChangeText = (name, value) => {
+  const onChangeText = (name: string, value: string) => {
     if (name === 'email') {
       !emailRegex.test(value) ? setError(name) : clearError(name)
     } else if (name === 'password') {
@@ -59,21 +60,25 @@ const SignUp = ({ navigation }) => {
   }
 
   return (
-    <KeyboardAwareScrollView
+    <FlatList
       contentContainerStyle={styles.root}
+      data={SignUpForm}
       scrollEnabled={true}
-      enableAutomaticScroll={true}>
-      <Image source={professorImage} style={styles.image} />
-      <View style={styles.breakLine} />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>Create an Account</Text>
-      </View>
+      removeClippedSubviews={false}
+      ListHeaderComponent={
+        <>
+          <Image source={professorImage} style={styles.image} />
+          <View style={styles.breakLine} />
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>Create an Account</Text>
+          </View>
 
-      <View style={styles.breakLine} />
-
-      {SignUpForm.map(({ name, label, secureTextEntry = false }) => (
+          <View style={styles.breakLine} />
+        </>
+      }
+      keyExtractor={({ name }) => name}
+      renderItem={({ item: { name, label, secureTextEntry = false } }) => (
         <TextInput
-          key={name}
           placeholder={label}
           secureTextEntry={secureTextEntry}
           value={formInput[name]}
@@ -86,37 +91,42 @@ const SignUp = ({ navigation }) => {
             }
           }
         />
-      ))}
+      )}
+      ListFooterComponent={
+        <>
+          <View style={styles.breakLine} />
+          <View style={styles.breakLine} />
+          <Button
+            style={[styles.button]}
+            onPress={() =>
+              handleSubmit(signUp.bind(this, formInput), callback)
+            }>
+            <Text style={[styles.buttonText]}>Sign Up</Text>
+          </Button>
 
-      <View style={styles.breakLine} />
-      <View style={styles.breakLine} />
-      <Button
-        style={[styles.button]}
-        onPress={() => handleSubmit(signUp.bind(this, formInput), callback)}>
-        <Text style={[styles.buttonText]}>Sign Up</Text>
-      </Button>
+          <View style={styles.breakLine} />
+          <View style={styles.textContainer}>
+            <Text>Already have an account? </Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigate('SignIn')
+                reset()
+              }}>
+              <Text style={[styles.highLight, { color: theme.colors.primary }]}>
+                Sign in
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.breakLine} />
-      <View style={styles.textContainer}>
-        <Text>Already have an account? </Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('SignIn')
-            reset()
-          }}>
-          <Text style={[styles.highLight, { color: theme.colors.primary }]}>
-            Sign in
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.breakLine} />
-      <ActivityIndicator
-        animating={initializing}
-        color={theme.colors.primary}
-        size={24}
-      />
-    </KeyboardAwareScrollView>
+          <View style={styles.breakLine} />
+          <ActivityIndicator
+            animating={initializing}
+            color={theme.colors.primary}
+            size={24}
+          />
+        </>
+      }
+    />
   )
 }
 
