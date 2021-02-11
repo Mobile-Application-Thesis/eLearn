@@ -45,7 +45,8 @@ const mainStack = [
     name: 'Create Lesson',
     component: CreateLesson,
     options: {
-      headerShown: false,
+      headerShown: true,
+      headerTitle: 'Editor',
     },
   },
 ]

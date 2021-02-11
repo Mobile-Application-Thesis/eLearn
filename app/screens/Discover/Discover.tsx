@@ -21,6 +21,7 @@ const Discover: React.FC = () => {
     <View style={styles.root}>
       <Header {...headerProps} />
       <FlatList
+        contentContainerStyle={{ flexGrow: 1 }}
         data={[]}
         ListEmptyComponent={() => <EmptyList />}
         renderItem={() => <></>}
