@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import {
   TextInput as Text,
+  TextInputAndroidProps,
   TouchableWithoutFeedback,
   View,
   ViewStyle,
@@ -11,18 +12,13 @@ import { useTheme } from '../../contexts/ThemeProvider'
 
 import styles from './styles'
 
-interface Props {
+interface Props extends TextInputAndroidProps {
   containerProps?
   containerStyle?: ViewStyle
   textInputStyle?: object
   rightIcon?
   leftIcon?
   multiline?: boolean
-  placeholder?: string
-  secureTextEntry?: boolean
-  value?: string
-  numberOfLines?: number
-  onChangeText?: (text: string) => void
 }
 
 const TextInput = ({
