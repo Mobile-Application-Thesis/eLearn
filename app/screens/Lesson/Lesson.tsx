@@ -2,8 +2,14 @@ import React from 'react'
 import { FlatList, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
+import DocumentPicker from 'react-native-document-picker'
 
-import { Header, FloatingButton, EmptyList } from '../../components'
+import {
+  Header,
+  FloatingButton,
+  EmptyList,
+  MoreActions,
+} from '../../components'
 import { useAuth } from '../../contexts/AuthProvider'
 import data from './../../constants/data'
 import styles from './styles'
@@ -15,15 +21,45 @@ const Lesson: React.FC<Props> = () => {
     user: { role },
   } = useAuth()
   const { navigate } = useNavigation()
-  const floatingButtonProps = {
-    onPress: () => navigate('Create Lesson'),
-    name: 'Create Lesson',
+
+  const pickDocs = async () => {
+    const document = await DocumentPicker.pick({
+      type: [DocumentPicker.types.docx, DocumentPicker.types.pdf],
+    })
+    console.log(document.uri, document.type, document.name, document.size)
   }
+
   return (
     <View style={styles.root}>
       <Header />
       {role === data.role.teacher && (
-        <FloatingButton {...floatingButtonProps} />
+        <MoreActions
+          actions={[
+            {
+              key: 'create',
+              shouldWait: false,
+              label: 'Open Editor',
+              onPress: () => navigate('Create Lesson'),
+              icon: {
+                name: 'file-document-edit-outline',
+                type: 'material-community',
+              },
+            },
+            {
+              key: 'import',
+              shouldWait: false,
+              label: 'Import document',
+              onPress: pickDocs,
+              icon: {
+                name: 'file-import-outline',
+                type: 'material-community',
+              },
+            },
+          ]}>
+          {({ openActions }) => (
+            <FloatingButton name="Create Lesson" onPress={openActions} />
+          )}
+        </MoreActions>
       )}
 
       <FlatList

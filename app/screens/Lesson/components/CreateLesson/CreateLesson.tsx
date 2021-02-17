@@ -5,22 +5,15 @@ import ImagePicker from 'react-native-image-crop-picker'
 import storage from '@react-native-firebase/storage'
 import PushNotification from 'react-native-push-notification'
 import { Icon } from 'react-native-elements'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { Avatar } from 'react-native-paper'
 
 import { useTheme } from './../../../../contexts/ThemeProvider'
 import { useAuth } from '../../../../contexts/AuthProvider'
-import { MainStackParamList } from '../../../../routes/types'
+import { CreateLessonNav } from '../../../../routes/types'
 import { Button } from '../../../../components'
 import styles from './styles'
 
-type CreateLessonNav = StackNavigationProp<MainStackParamList, 'Create Lesson'>
-
-interface Props {
-  navigation: CreateLessonNav
-}
-
-const CreateLesson: React.FC<Props> = ({ navigation }) => {
+const CreateLesson: React.FC<CreateLessonNav> = ({ navigation }) => {
   const editorRef = useRef<any>()
   const [htmlText, setHtmlText] = useState('')
   const [containerSize, setContainerSize] = useState(0)
@@ -93,19 +86,23 @@ const CreateLesson: React.FC<Props> = ({ navigation }) => {
   }
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', onBackPress)
-
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', onBackPress)
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      onBackPress,
+    )
+    return () => backHandler.remove()
   }, [htmlText])
 
   const addImage = () => {
     ImagePicker.openPicker({
+      multiple: true,
       includeBase64: true,
       mediaType: 'photo',
       compressImageQuality: 0.5,
-    }).then(({ mime, data }) => {
-      editorRef.current?.insertImage(`data:${mime};base64,${data}`)
+    }).then((results) => {
+      results.map(({ mime, data }) =>
+        editorRef.current?.insertImage(`data:${mime};base64,${data}`),
+      )
     })
   }
 
@@ -118,7 +115,6 @@ const CreateLesson: React.FC<Props> = ({ navigation }) => {
         channelId: user.id,
         message: 'Upload is in progress...',
       })
-      // SimpleToast.show('Upload in progress...')
       const upload = storage()
         .ref(
           `users/${user.id}/uploads/lesson/${
@@ -146,9 +142,7 @@ const CreateLesson: React.FC<Props> = ({ navigation }) => {
               break
           }
         },
-        () => {
-          // Handle unsuccessful uploads
-        },
+        () => {},
         () => {
           upload.snapshot.ref.getDownloadURL().then((downloadURL) => {
             PushNotification.localNotification({
