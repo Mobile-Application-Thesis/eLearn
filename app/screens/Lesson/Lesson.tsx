@@ -13,6 +13,7 @@ import {
 import { useAuth } from '../../contexts/AuthProvider'
 import data from './../../constants/data'
 import styles from './styles'
+import { classParams } from '../../routes/ClassroomTab'
 
 interface Props {}
 
@@ -21,6 +22,7 @@ const Lesson: React.FC<Props> = () => {
     user: { role },
   } = useAuth()
   const { navigate } = useNavigation()
+  const { id } = classParams()
 
   const pickDocs = async () => {
     const document = await DocumentPicker.pick({
@@ -39,7 +41,7 @@ const Lesson: React.FC<Props> = () => {
               key: 'create',
               shouldWait: false,
               label: 'Open Editor',
-              onPress: () => navigate('Create Lesson'),
+              onPress: () => navigate('Create Lesson', { classId: id }),
               icon: {
                 name: 'file-document-edit-outline',
                 type: 'material-community',
@@ -65,7 +67,7 @@ const Lesson: React.FC<Props> = () => {
       <FlatList
         contentContainerStyle={styles.content}
         data={[]}
-        keyExtractor={({ id }) => id}
+        keyExtractor={(item) => item.id}
         ListEmptyComponent={
           <EmptyList title="You don't have any Lessons yet!" />
         }

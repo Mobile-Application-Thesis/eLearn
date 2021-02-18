@@ -1,39 +1,10 @@
 import React from 'react'
-import { Fonts } from 'react-native-paper/lib/typescript/types'
+import { DarkTheme as theme } from '../constants/theme'
 
 declare type Mode = 'adaptive' | 'exact'
 
 export declare type ThemeContextTypes = {
-  theme: {
-    dark: boolean
-    mode?: Mode
-    roundness: number
-    colors: {
-      primary: string
-      background: string
-      surface: string
-      accent: string
-      error: string
-      text: string
-      onSurface: string
-      onBackground: string
-      disabled: string
-      placeholder: string
-      backdrop: string
-      border: string
-      notification: string
-    }
-    icons: {
-      size: {
-        big: number
-        small: number
-      }
-    }
-    fonts: Fonts
-    animation: {
-      scale: number
-    }
-  }
+  theme: typeof theme
   darkMode: boolean
   toggleDarkMode: () => any
 }

@@ -3,7 +3,7 @@ import Search from '../../screens/Search'
 import Settings from '../../screens/Settings'
 import { CreateClass } from '../../screens/Class/components'
 import ClassroomTab from '../../routes/ClassroomTab'
-import { CreateLesson } from './../../screens/Lesson/components'
+import { CreateLesson, LessonDetails } from './../../screens/Lesson/components'
 
 const mainStack = [
   {
@@ -47,6 +47,14 @@ const mainStack = [
     options: {
       headerShown: true,
       headerTitle: 'Editor',
+    },
+  },
+  {
+    name: 'Lesson Details',
+    component: LessonDetails,
+    options: {
+      headerShown: true,
+      headerTitle: 'Details',
     },
   },
 ]

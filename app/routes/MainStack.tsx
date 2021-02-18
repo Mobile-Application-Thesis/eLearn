@@ -44,7 +44,7 @@ const MainStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}
-      headerMode="float"
+      headerMode="screen"
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
       }}>

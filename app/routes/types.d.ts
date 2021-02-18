@@ -7,7 +7,13 @@ export declare type MainStackParamList = {
   CreateClass: undefined
   Classroom: undefined
   'Create Lesson': {
+    classId?: string
     lessonId?: string
+  }
+  'Lesson Details': {
+    classId?: string
+    htmlText?: string
+    attachments?: Array<string>
   }
 }
 
@@ -21,7 +27,12 @@ export declare type ClassroomTabParamList = {
   Members: undefined
 }
 
-export declare type CreateLessonNav = StackScreenProps<
+export declare type CreateLessonProps = StackScreenProps<
   MainStackParamList,
   'Create Lesson'
+>
+
+export declare type LessonDetailsProps = StackScreenProps<
+  MainStackParamList,
+  'Lesson Details'
 >

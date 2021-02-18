@@ -8,6 +8,7 @@ import EmptyList from './EmptyList'
 import ActionsModal from './ActionsModal'
 import ActionsSheet from './ActionsSheet'
 import MoreActions from './MoreActions'
+import HTMLView from './HTMLView'
 
 export {
   Header,
@@ -20,4 +21,5 @@ export {
   ActionsModal,
   ActionsSheet,
   MoreActions,
+  HTMLView,
 }

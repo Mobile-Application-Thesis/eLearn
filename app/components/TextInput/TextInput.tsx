@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react'
 import {
   TextInput as Text,
-  TextInputAndroidProps,
+  TextInputProps,
   TouchableWithoutFeedback,
   View,
+  ViewProps,
   ViewStyle,
 } from 'react-native'
 import { Icon } from 'react-native-elements'
@@ -12,8 +13,8 @@ import { useTheme } from '../../contexts/ThemeProvider'
 
 import styles from './styles'
 
-interface Props extends TextInputAndroidProps {
-  containerProps?
+interface Props extends React.Component<TextInputProps> {
+  containerProps?: ViewProps
   containerStyle?: ViewStyle
   textInputStyle?: object
   rightIcon?
@@ -70,15 +71,6 @@ const TextInput = ({
       </View>
     </TouchableWithoutFeedback>
   )
-}
-
-TextInput.defaultProps = {
-  containerProps: {},
-  containerStyle: {},
-  textInputStyle: {},
-  rightIcon: {},
-  leftIcon: {},
-  multiline: false,
 }
 
 export default TextInput

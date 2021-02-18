@@ -7,7 +7,15 @@ import { useTheme } from '../contexts/ThemeProvider'
 import { BottomTabs } from '../components'
 import classroomTab from '../constants/routes/classroomTab'
 
-const TabContext = createContext<any>({})
+const TabContext = createContext<{
+  id?: string
+  classCode?: string
+  description?: string
+  name?: string
+  status?: string
+  students?: Array<string>
+  teachers?: Array<string>
+}>({})
 
 export const classParams = () => useContext(TabContext)
 

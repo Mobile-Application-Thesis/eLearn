@@ -6,14 +6,16 @@ import storage from '@react-native-firebase/storage'
 import PushNotification from 'react-native-push-notification'
 import { Icon } from 'react-native-elements'
 import { Avatar } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/core'
+import SimpleToast from 'react-native-simple-toast'
 
 import { useTheme } from './../../../../contexts/ThemeProvider'
 import { useAuth } from '../../../../contexts/AuthProvider'
-import { CreateLessonNav } from '../../../../routes/types'
+import { CreateLessonProps } from '../../../../routes/types'
 import { Button } from '../../../../components'
 import styles from './styles'
 
-const CreateLesson: React.FC<CreateLessonNav> = ({ navigation }) => {
+const CreateLesson: React.FC<CreateLessonProps> = ({ navigation, route }) => {
   const editorRef = useRef<any>()
   const [htmlText, setHtmlText] = useState('')
   const [containerSize, setContainerSize] = useState(0)
@@ -22,6 +24,7 @@ const CreateLesson: React.FC<CreateLessonNav> = ({ navigation }) => {
     progress: 0,
   })
   const [action, setAction] = useState(false)
+  const { navigate } = useNavigation()
   const { theme } = useTheme()
   const { user } = useAuth()
   const moreActions = 'moreActions'
@@ -48,9 +51,28 @@ const CreateLesson: React.FC<CreateLessonNav> = ({ navigation }) => {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => {}}>
-          <Text style={[styles.button, { color: theme.colors.primary }]}>
-            save
+        <TouchableOpacity
+          onPress={() =>
+            navigate('Lesson Details', {
+              htmlText: htmlText,
+              classId: route.params.classId,
+            })
+          }
+          disabled={htmlText.length === 0}>
+          <Text
+            style={[
+              styles.button,
+              {
+                color:
+                  htmlText.length === 0
+                    ? theme.dark
+                      ? '#43484d'
+                      : theme.colors.text
+                    : theme.colors.primary,
+                fontWeight: htmlText.length === 0 ? '100' : '700',
+              },
+            ]}>
+            next
           </Text>
         </TouchableOpacity>
       ),
@@ -142,7 +164,9 @@ const CreateLesson: React.FC<CreateLessonNav> = ({ navigation }) => {
               break
           }
         },
-        () => {},
+        () => {
+          SimpleToast.show('An error occured. please try again later.')
+        },
         () => {
           upload.snapshot.ref.getDownloadURL().then((downloadURL) => {
             PushNotification.localNotification({
@@ -173,6 +197,11 @@ const CreateLesson: React.FC<CreateLessonNav> = ({ navigation }) => {
           scrollEnabled={true}
           showsHorizontalScrollIndicator={false}
           onChange={(text) => setHtmlText(text)}
+          editorStyle={{
+            backgroundColor: theme.dark && '#43484d',
+            color: theme.dark && theme.colors.primary,
+            codeBackgroundColor: theme.colors.code,
+          }}
           style={{
             flex: 1,
             maxHeight: containerSize - (action ? 100 : 55),
@@ -214,12 +243,12 @@ const CreateLesson: React.FC<CreateLessonNav> = ({ navigation }) => {
               actions.alignFull,
               actions.alignRight,
               actions.alignCenter,
-              actions.setBold,
+              actions.insertBulletsList,
+              actions.insertOrderedList,
               actions.heading1,
               actions.heading2,
               actions.heading3,
               actions.heading4,
-              actions.insertLine,
               actions.redo,
               actions.undo,
             ]}
@@ -258,12 +287,12 @@ const CreateLesson: React.FC<CreateLessonNav> = ({ navigation }) => {
             actions.insertVideo,
             actions.code,
             actions.blockquote,
+            actions.setBold,
             actions.setItalic,
             actions.setUnderline,
-            actions.insertBulletsList,
-            actions.insertOrderedList,
             actions.indent,
             actions.outdent,
+            actions.insertLine,
             moreActions,
           ]}
         />

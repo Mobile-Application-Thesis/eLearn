@@ -16,6 +16,8 @@ const DefaultTheme = {
     primary: '#2f426f',
     blue: '#1e90ea',
     background: '#fff',
+    code: '#f0f0f0',
+    blockquote: '#ddd',
   },
   icons: {
     size: {
@@ -33,6 +35,8 @@ const DarkTheme = {
     primary: '#fff',
     blue: '#1e90ea',
     background: '#181818',
+    code: '#2a3836',
+    blockquote: '#ddd',
   },
   icons: {
     size: {
