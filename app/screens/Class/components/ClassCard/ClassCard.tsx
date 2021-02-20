@@ -44,7 +44,7 @@ const ClassCard: React.FC<Props> = (props) => {
     <Button onPress={() => navigate('Classroom', props)}>
       <ImageBackground
         source={cardBackground}
-        imageStyle={{ borderRadius: 10 }}
+        imageStyle={{ borderRadius: 5 }}
         key={id}
         style={[
           styles.root,

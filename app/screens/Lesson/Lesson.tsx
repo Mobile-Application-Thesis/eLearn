@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
@@ -10,14 +10,18 @@ import {
   EmptyList,
   MoreActions,
 } from '../../components'
+import { LessonCard } from './components'
+
+import { FirebaseService } from './../../services/firebase.services'
 import { useAuth } from '../../contexts/AuthProvider'
-import data from './../../constants/data'
+import data, { LessonDataTypes } from './../../constants/data'
 import styles from './styles'
 import { classParams } from '../../routes/ClassroomTab'
 
 interface Props {}
 
 const Lesson: React.FC<Props> = () => {
+  const [lessons, setLessons] = useState<LessonDataTypes[]>()
   const {
     user: { role },
   } = useAuth()
@@ -30,6 +34,22 @@ const Lesson: React.FC<Props> = () => {
     })
     console.log(document.uri, document.type, document.name, document.size)
   }
+
+  useEffect(() => {
+    const unsubscribe = FirebaseService.getFBCollectionFromChildData({
+      parentCollection: 'class',
+      parentDoc: id,
+      endCollection: 'lesson',
+    }).onSnapshot((snapshot) => {
+      var temp: LessonDataTypes[] = []
+      snapshot.forEach((doc) => {
+        temp.push({ id: doc.id, ...doc.data() })
+      })
+      setLessons(temp)
+    })
+
+    return unsubscribe
+  }, [])
 
   return (
     <View style={styles.root}>
@@ -65,13 +85,13 @@ const Lesson: React.FC<Props> = () => {
       )}
 
       <FlatList
-        contentContainerStyle={styles.content}
-        data={[]}
+        contentContainerStyle={styles.container}
+        data={lessons}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={
           <EmptyList title="You don't have any Lessons yet!" />
         }
-        renderItem={({}) => <Text>"</Text>}
+        renderItem={({ item }) => <LessonCard {...item} />}
       />
     </View>
   )

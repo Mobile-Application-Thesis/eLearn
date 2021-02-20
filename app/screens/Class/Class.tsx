@@ -59,11 +59,7 @@ const Class: React.FC = () => {
       <Header {...headerProps} />
       <FloatingButton {...floatingButtonProps} />
       <FlatList
-        contentContainerStyle={{
-          flexGrow: 1,
-          marginHorizontal: 10,
-          marginVertical: 10,
-        }}
+        contentContainerStyle={styles.container}
         data={classList}
         renderItem={({ item }) => <ClassCard key={item.id} {...item} />}
         ListEmptyComponent={() => (

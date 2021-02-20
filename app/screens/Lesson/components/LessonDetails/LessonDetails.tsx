@@ -9,6 +9,7 @@ import {
 import { Text } from 'react-native-paper'
 import { Avatar } from 'react-native-paper'
 
+import { LessonDataTypes } from '../../../../constants/data'
 import { FirebaseService } from './../../../../services/firebase.services'
 import { HTMLView, Button } from './../../../../components'
 import { LessonDetailsProps } from '../../../../routes/types'
@@ -85,16 +86,20 @@ const LessonDetails: React.FC<LessonDetailsProps> = ({ navigation, route }) => {
   }, [lessonTitle])
 
   const createLesson = async () => {
-    const toSave = {
+    const toSave: LessonDataTypes = {
       title: lessonTitle || '',
       htmlContent: route.params.htmlText || '',
       attachments: [],
       externalLinks: [],
       assessmentId: '',
-      classId: route.params.classId,
       createdBy: user.id,
     }
-    await FirebaseService.addFBDoc({ collection: 'lesson', docData: toSave })
+    await FirebaseService.addFBDocToChildDoc({
+      collection: 'class',
+      docData: toSave,
+      parentDoc: route.params.classId,
+      endCollection: 'lesson',
+    })
 
     navigation.navigate('Classroom')
   }

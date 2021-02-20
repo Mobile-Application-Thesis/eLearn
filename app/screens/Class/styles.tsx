@@ -7,6 +7,7 @@ interface Styles {
   box: ViewStyle
   text: TextStyle
   buttonText: TextStyle
+  container: ViewStyle
 }
 
 export default StyleSheet.create<Styles>({
@@ -36,5 +37,10 @@ export default StyleSheet.create<Styles>({
   buttonText: {
     fontSize: 16,
     marginLeft: 10,
+  },
+  container: {
+    flexGrow: 1,
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
 })

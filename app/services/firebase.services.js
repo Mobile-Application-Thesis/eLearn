@@ -162,10 +162,8 @@ class Firebase {
     return this.db.collection(collection).where(key, operator, value)
   }
 
-  getFBCollectionDataWhereBool({
+  getFBCollectionFromChildData({
     endCollection,
-    key,
-    value,
     parentCollection = 'users',
     parentDoc,
   } = {}) {
@@ -179,7 +177,6 @@ class Firebase {
       .collection(parentCollection)
       .doc(parentDoc || this.auth.currentUser.uid)
       .collection(endCollection)
-      .where(key, '==', value)
   }
 
   addFBData({ values, doc, collection = 'users' } = {}) {
@@ -217,6 +214,25 @@ class Firebase {
       .add(docData)
       .then((res) => ({ data: res }))
       .catch((err) => err)
+  }
+
+  addFBDocToChildDoc = ({
+    collection = 'users',
+    parentDoc = this.auth.currentUser.uid,
+    docData = {},
+    endCollection,
+  } = {}) => {
+    const [authError] = this.checkAuthorization()
+
+    if (authError) {
+      return [authError]
+    }
+
+    return this.db
+      .collection(collection)
+      .doc(parentDoc)
+      .collection(endCollection)
+      .add(docData)
   }
 
   setFBDoc = ({ parentCollection = 'users', doc, docData = {} } = {}) => {

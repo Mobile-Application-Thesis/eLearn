@@ -5,4 +5,14 @@ const data = {
   },
 }
 
+export declare type LessonDataTypes = {
+  assessmentId: string
+  attachments: string[]
+  createdBy: string
+  externalLinks: string[]
+  htmlContent: string
+  title: string
+  id?: string
+}
+
 export default data

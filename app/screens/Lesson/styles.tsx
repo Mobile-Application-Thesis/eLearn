@@ -2,14 +2,16 @@ import { StyleSheet, ViewStyle } from 'react-native'
 
 interface Styles {
   root: ViewStyle
-  content: ViewStyle
+  container: ViewStyle
 }
 
 export default StyleSheet.create<Styles>({
   root: {
     flex: 1,
   },
-  content: {
+  container: {
     flexGrow: 1,
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
 })
