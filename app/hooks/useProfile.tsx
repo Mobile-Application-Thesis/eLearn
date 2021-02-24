@@ -35,11 +35,11 @@ const useProfile = (
         if (doc.exists) {
           setUserProfile(doc.data())
         } else {
-          console.log('No such document!')
+          console.error('No such document!')
         }
       })
       .catch((error) => {
-        console.log('Error getting document:', error)
+        console.error('Error getting document:', error)
       })
 
   return [userProfile, updateUser, setUser]

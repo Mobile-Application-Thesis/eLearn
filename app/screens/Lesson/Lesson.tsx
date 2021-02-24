@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, View } from 'react-native'
-import { Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
 import DocumentPicker from 'react-native-document-picker'
 
@@ -10,7 +9,7 @@ import {
   EmptyList,
   MoreActions,
 } from '../../components'
-import { LessonCard } from './components'
+import { ClassHeader, LessonCard } from './components'
 
 import { FirebaseService } from './../../services/firebase.services'
 import { useAuth } from '../../contexts/AuthProvider'
@@ -26,13 +25,13 @@ const Lesson: React.FC<Props> = () => {
     user: { role },
   } = useAuth()
   const { navigate } = useNavigation()
-  const { id } = classParams()
+  const { id, ...classDetails } = classParams()
 
   const pickDocs = async () => {
     const document = await DocumentPicker.pick({
       type: [DocumentPicker.types.docx, DocumentPicker.types.pdf],
     })
-    console.log(document.uri, document.type, document.name, document.size)
+    console.info(document.uri, document.type, document.name, document.size)
   }
 
   useEffect(() => {
@@ -88,6 +87,7 @@ const Lesson: React.FC<Props> = () => {
         contentContainerStyle={styles.container}
         data={lessons}
         keyExtractor={(item) => item.id}
+        ListHeaderComponent={<ClassHeader {...classDetails} />}
         ListEmptyComponent={
           <EmptyList title="You don't have any Lessons yet!" />
         }

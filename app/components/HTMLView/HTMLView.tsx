@@ -11,9 +11,14 @@ import styles from './styles'
 interface Props {
   htmlText?: string
   containerStyle?: ViewStyle
+  preview?: boolean
 }
 
-const HTMLView: React.FC<Props> = ({ htmlText, containerStyle }) => {
+const HTMLView: React.FC<Props> = ({
+  htmlText,
+  containerStyle,
+  preview = false,
+}) => {
   const { theme } = useTheme()
   const contentWidth = useWindowDimensions().width
 
@@ -21,7 +26,7 @@ const HTMLView: React.FC<Props> = ({ htmlText, containerStyle }) => {
     <View style={[styles.root, containerStyle]}>
       <HTML
         source={{ html: htmlText }}
-        tagsStyles={tagsStyles(theme)}
+        tagsStyles={tagsStyles(theme, preview)}
         contentWidth={contentWidth}
         renderers={{
           video: (htmlAttribs, children, convertedCSSStyles, passProps) => (

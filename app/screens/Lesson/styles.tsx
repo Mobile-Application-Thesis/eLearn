@@ -11,7 +11,6 @@ export default StyleSheet.create<Styles>({
   },
   container: {
     flexGrow: 1,
-    marginHorizontal: 10,
     marginVertical: 10,
   },
 })

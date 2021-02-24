@@ -9,9 +9,9 @@ import styles from './styles'
 import { useAuth } from './../../contexts/AuthProvider'
 
 interface ItemProps {
-  fullName: string
-  avatar: string
-  id: string
+  fullName?: string
+  avatar?: string
+  id?: string
 }
 
 const Item: React.FC<ItemProps> = ({ fullName, avatar, id }) => {
@@ -49,14 +49,28 @@ const Members: React.FC = () => {
             <FlatList
               data={teachers}
               ListHeaderComponent={
-                <Text style={[styles.title, { color: theme.colors.primary }]}>
-                  Teachers
+                <Text
+                  style={[
+                    styles.title,
+                    {
+                      color: theme.colors.primary,
+                      borderBottomColor: theme.colors.facebook,
+                    },
+                  ]}>
+                  Teachers {teachers.length}
                 </Text>
               }
               renderItem={({ item }) => <Item key={item.id} {...item} />}
               ListFooterComponent={
-                <Text style={[styles.title, { color: theme.colors.primary }]}>
-                  Students
+                <Text
+                  style={[
+                    styles.title,
+                    {
+                      color: theme.colors.primary,
+                      borderBottomColor: theme.colors.facebook,
+                    },
+                  ]}>
+                  Students {students.length}
                 </Text>
               }
             />

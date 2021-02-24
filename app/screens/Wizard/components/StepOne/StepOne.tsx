@@ -72,7 +72,7 @@ const StepOne = () => {
         </View>
         <View style={styles.buttonContainer}>
           <Button style={styles.button} onPress={nextStep}>
-            <Text style={{ color: theme.colors.background }}>Next</Text>
+            <Text style={{ color: theme.colors.text }}>Next</Text>
           </Button>
         </View>
         <Text style={[styles.errorMsg, { color: theme.colors.error }]}>

@@ -29,8 +29,7 @@ const Wizard: React.FC<Props> = () => {
         </Text>
         <View style={styles.buttonContainer}>
           <Button style={[styles.button]} onPress={() => navigate('StepOne')}>
-            <Text
-              style={[styles.buttonText, { color: theme.colors.background }]}>
+            <Text style={[styles.buttonText, { color: theme.colors.text }]}>
               proceed
             </Text>
           </Button>

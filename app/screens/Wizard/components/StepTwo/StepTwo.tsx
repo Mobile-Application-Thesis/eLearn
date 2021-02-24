@@ -22,7 +22,7 @@ const StepTwo = () => {
 
         <View style={styles.buttonContainer}>
           <Button style={styles.button} onPress={() => setWizard(false)}>
-            <Text style={{ color: theme.colors.background }}>Finish</Text>
+            <Text style={{ color: theme.colors.text }}>Finish</Text>
           </Button>
         </View>
       </View>

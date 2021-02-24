@@ -1,13 +1,24 @@
 import React from 'react'
 import { Appbar } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
-import { TextInput } from 'react-native'
+import { TextInput, TextInputProps, TextStyle } from 'react-native'
 
 import { useTheme } from '../../contexts/ThemeProvider'
 
 import styles from './styles'
 
-const StackHeader = ({ headerTitle, headerTextInput, textInputProps }) => {
+interface Props extends TextInputProps {
+  headerTitle?: string
+  headerTextInput?: boolean
+  textInputContainerStyle?: TextStyle
+}
+
+const StackHeader: React.FC<Props> = ({
+  headerTitle,
+  headerTextInput,
+  textInputContainerStyle,
+  ...rest
+}) => {
   const { goBack } = useNavigation()
   const { theme } = useTheme()
 
@@ -29,9 +40,9 @@ const StackHeader = ({ headerTitle, headerTextInput, textInputProps }) => {
           style={[
             styles.textInput,
             { color: theme.colors.primary },
-            textInputProps.style,
+            textInputContainerStyle,
           ]}
-          {...textInputProps}
+          {...rest}
         />
       )}
     </Appbar.Header>

@@ -9,12 +9,6 @@ const Discover: React.FC = () => {
   const { navigate } = useNavigation()
   const headerProps = {
     headerTitle: 'Discover',
-    rightActions: [
-      {
-        icon: 'magnify',
-        onPress: () => navigate('Search'),
-      },
-    ],
   }
 
   return (

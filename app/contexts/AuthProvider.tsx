@@ -80,8 +80,9 @@ const AuthProvider = ({ children }) => {
     setInitializing(false)
 
     if (!response.user) {
-      ErrorHandler(response)
+      return ErrorHandler(response)
     }
+    setUser(response.user.uid)
   }
 
   const signOut = async () => {

@@ -2,60 +2,46 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native'
 
 interface Styles {
   root: ViewStyle
-  content: ViewStyle
   titleContainer: ViewStyle
+  htmlPreviewContainer: ViewStyle
   text: TextStyle
-  description: TextStyle
-  name: TextStyle
-  classCode: TextStyle
-  classCodeContainer: ViewStyle
-  footer: ViewStyle
-  icon: ViewStyle
+  darkMode: TextStyle
+  preview: TextStyle
 }
 
 export default StyleSheet.create<Styles>({
   root: {
     marginBottom: 10,
+    marginHorizontal: 10,
     borderRadius: 10,
+    elevation: 8,
   },
-  content: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
+  htmlPreviewContainer: {
+    height: 130,
+    overflow: 'hidden',
+    paddingTop: 20,
+    paddingHorizontal: 30,
+    borderTopEndRadius: 5,
+    borderTopLeftRadius: 5,
+  },
+  darkMode: {
+    borderWidth: 1,
   },
   titleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    padding: 10,
+    borderBottomEndRadius: 5,
+    borderBottomLeftRadius: 5,
   },
   text: {
     color: '#fff',
     fontWeight: '700',
   },
-  description: {
-    marginTop: 5,
-    color: '#fff',
-  },
-  name: {
-    fontSize: 20,
-    textTransform: 'uppercase',
-  },
-  classCode: {
-    borderRadius: 3,
-    paddingHorizontal: 8,
+  preview: {
+    position: 'absolute',
+    top: 15,
+    left: 15,
+    zIndex: 100,
+    fontStyle: 'italic',
     fontWeight: '700',
-    paddingVertical: 1,
-  },
-  classCodeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  footer: {
-    marginTop: 35,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  icon: {
-    marginLeft: 5,
   },
 })

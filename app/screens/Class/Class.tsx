@@ -48,7 +48,7 @@ const Class: React.FC = () => {
       })
     } else {
       setFloationButtonProps({
-        onPress: () => {},
+        onPress: () => navigate('Search'),
         name: 'Join a Class',
       })
     }

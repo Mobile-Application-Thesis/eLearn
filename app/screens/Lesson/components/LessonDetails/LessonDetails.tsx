@@ -14,13 +14,11 @@ import { FirebaseService } from './../../../../services/firebase.services'
 import { HTMLView, Button } from './../../../../components'
 import { LessonDetailsProps } from '../../../../routes/types'
 import { useTheme } from './../../../../contexts/ThemeProvider'
-import { useAuth } from '../../../../contexts/AuthProvider'
 
 import styles from './styles'
 
 const LessonDetails: React.FC<LessonDetailsProps> = ({ navigation, route }) => {
   const { theme } = useTheme()
-  const { user } = useAuth()
   const [lessonTitle, setLessonTitle] = useState('')
 
   useEffect(() => {
@@ -92,7 +90,6 @@ const LessonDetails: React.FC<LessonDetailsProps> = ({ navigation, route }) => {
       attachments: [],
       externalLinks: [],
       assessmentId: '',
-      createdBy: user.id,
     }
     await FirebaseService.addFBDocToChildDoc({
       collection: 'class',

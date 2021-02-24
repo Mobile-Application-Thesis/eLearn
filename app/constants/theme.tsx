@@ -6,15 +6,17 @@ import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
 } from 'react-native-paper'
+import { colors } from 'react-native-elements'
 
 const DefaultTheme = {
   ...PaperDefaultTheme,
   ...NavigationDefaultTheme,
   colors: {
+    ...colors,
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
     primary: '#2f426f',
-    blue: '#1e90ea',
+    facebook: '#2f426f',
     background: '#fff',
     code: '#f0f0f0',
     blockquote: '#ddd',
@@ -30,10 +32,11 @@ const DarkTheme = {
   ...PaperDarkTheme,
   ...NavigationDarkTheme,
   colors: {
+    ...colors,
     ...PaperDarkTheme.colors,
     ...NavigationDarkTheme.colors,
     primary: '#fff',
-    blue: '#1e90ea',
+    facebook: '#212121',
     background: '#181818',
     code: '#2a3836',
     blockquote: '#ddd',

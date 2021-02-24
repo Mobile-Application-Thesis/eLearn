@@ -1,7 +1,7 @@
 import SimpleToast from 'react-native-simple-toast'
 
 const errors = ({ code }: { code: string }) => {
-  console.log(code)
+  console.warn(code)
   let msg = ''
   if (code === 'auth/invalid-email') {
     msg = 'Email address is invalid!'

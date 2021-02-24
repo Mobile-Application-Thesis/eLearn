@@ -1,4 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
+import { User } from '../contexts/types'
 
 export declare type MainStackParamList = {
   Home: undefined
@@ -36,3 +37,13 @@ export declare type LessonDetailsProps = StackScreenProps<
   MainStackParamList,
   'Lesson Details'
 >
+
+export declare type ClassroomTabContextTypes = {
+  id?: string
+  classCode?: string
+  description?: string
+  name?: string
+  status?: string
+  students?: User[]
+  teachers?: User[]
+}

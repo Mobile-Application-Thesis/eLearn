@@ -4,6 +4,7 @@ import { Text } from 'react-native-paper'
 
 import styles from './styles'
 import Button from '../Button'
+import { useTheme } from './../../contexts/ThemeProvider'
 
 interface Props {
   name?: string
@@ -18,8 +19,15 @@ const FloatingButton: React.FC<Props> = ({
   textStyle,
   onPress,
 }) => {
+  const { theme } = useTheme()
   return (
-    <Button style={[styles.root, containerStyle]} onPress={onPress}>
+    <Button
+      style={[
+        styles.root,
+        { backgroundColor: theme.colors.facebook },
+        containerStyle,
+      ]}
+      onPress={onPress}>
       <Text style={[styles.text, textStyle]}>{name}</Text>
     </Button>
   )

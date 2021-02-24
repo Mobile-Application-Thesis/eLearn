@@ -1,56 +1,56 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import { Text } from 'react-native-paper'
-import { ImageBackground } from 'react-native'
-import { Icon } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/core'
 
-import { useAuth } from '../../../../contexts/AuthProvider'
+import { HTMLView } from './../../../../components'
 import { useTheme } from '../../../../contexts/ThemeProvider'
-import data from '../../../../constants/data'
-import { useProfile } from '../../../../hooks'
+import { LessonDataTypes } from '../../../../constants/data'
 import styles from './styles'
-import { Button } from '../../../../components'
-const cardBackground = require('../../../../assets/class-card-background.jpg')
 
-interface Props {
-  id?: string
-  title?: string
-  createdBy?: string
-}
-
-const LessonCard: React.FC<Props> = ({ id, title, createdBy }) => {
+const LessonCard: React.FC<LessonDataTypes> = ({ title, htmlContent }) => {
   const { theme } = useTheme()
-  const { user } = useAuth()
-  const { role } = data
   const { navigate } = useNavigation()
-  const [instructor] = useProfile(createdBy)
 
   return (
-    <Button onPress={() => {}}>
-      <ImageBackground
-        source={cardBackground}
-        imageStyle={{ borderRadius: 5 }}
-        key={id}
+    <TouchableOpacity
+      style={[styles.root, { backgroundColor: theme.colors.background }]}
+      onPress={() => {}}>
+      <View
         style={[
-          styles.root,
-          {
-            flex: 1,
-            backgroundColor: theme.colors.border,
-          },
+          styles.htmlPreviewContainer,
+          theme.dark
+            ? {
+                ...styles.darkMode,
+                borderColor: theme.colors.border,
+              }
+            : { backgroundColor: theme.colors.code },
         ]}>
-        <View style={styles.content}>
-          <View style={styles.titleContainer}>
-            <Text style={[styles.text, styles.name]}>{title}</Text>
-            <Icon type="material-community" name="dots-vertical" color="#fff" />
-          </View>
-          <Text style={[styles.description]}>{}</Text>
-          <View style={styles.footer}>
-            <Text />
-          </View>
-        </View>
-      </ImageBackground>
-    </Button>
+        <Text
+          style={[
+            styles.preview,
+            {
+              color: theme.dark ? theme.colors.text : theme.colors.grey1,
+            },
+          ]}>
+          Preview
+        </Text>
+        <HTMLView htmlText={htmlContent} preview={true} />
+      </View>
+      <View
+        style={[
+          styles.titleContainer,
+          { backgroundColor: theme.colors.facebook },
+          theme.dark
+            ? {
+                borderBottomWidth: 1,
+                borderColor: theme.colors.border,
+              }
+            : {},
+        ]}>
+        <Text style={styles.text}>{title}</Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 
