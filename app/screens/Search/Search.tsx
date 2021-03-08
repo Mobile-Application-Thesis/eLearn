@@ -41,7 +41,7 @@ const Search: React.FC = () => {
           }
           return classDetails
         })}
-        ListEmptyComponent={() => <EmptyList />}
+        ListEmptyComponent={() => <EmptyList title="No result." />}
         renderItem={({ item }) => <SearchCard key={item.id} {...item} />}
       />
     </View>

@@ -14,10 +14,10 @@ export default StyleSheet.create<Styles>({
     marginBottom: 10,
     marginHorizontal: 10,
     borderRadius: 10,
-    elevation: 8,
+    elevation: 1,
   },
   htmlPreviewContainer: {
-    height: 130,
+    height: 100,
     overflow: 'hidden',
     paddingTop: 20,
     paddingHorizontal: 30,
@@ -31,6 +31,9 @@ export default StyleSheet.create<Styles>({
     padding: 10,
     borderBottomEndRadius: 5,
     borderBottomLeftRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   text: {
     color: '#fff',

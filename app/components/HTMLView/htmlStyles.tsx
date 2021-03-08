@@ -5,16 +5,17 @@ const tagsStyles = (theme?: typeof DarkTheme, preview?: boolean) => {
   const {
     colors: { text, greyOutline },
   } = theme
+  const style = { color: preview ? greyOutline : text }
   return StyleSheet.create({
-    i: { color: preview ? greyOutline : text },
-    li: { color: preview ? greyOutline : text },
-    ul: { color: preview ? greyOutline : text },
-    p: { color: preview ? greyOutline : text },
-    div: { color: preview ? greyOutline : text },
-    h1: { color: preview ? greyOutline : text },
-    h2: { color: preview ? greyOutline : text },
-    h3: { color: preview ? greyOutline : text },
-    h4: { color: preview ? greyOutline : text },
+    i: style,
+    li: style,
+    ul: style,
+    p: style,
+    div: { ...style, textAlign: 'justify' },
+    h1: style,
+    h2: style,
+    h3: style,
+    h4: style,
   })
 }
 

@@ -199,6 +199,28 @@ class Firebase {
       .doc(doc)
       .update({
         ...clone,
+        updatedAt: app.firestore.FieldValue.serverTimestamp(),
+      })
+  }
+
+  updateFBChildData({
+    values,
+    doc = this.auth.currentUser.uid,
+    collection = 'users',
+    childCollection,
+    childDoc,
+  } = {}) {
+    const clone = { ...values }
+    delete clone.id
+
+    return this.db
+      .collection(collection)
+      .doc(doc)
+      .collection(childCollection)
+      .doc(childDoc)
+      .update({
+        ...clone,
+        updatedAt: app.firestore.FieldValue.serverTimestamp(),
       })
   }
 
@@ -211,7 +233,7 @@ class Firebase {
 
     return this.db
       .collection(collection)
-      .add(docData)
+      .add({ ...docData, createdAt: app.firestore.FieldValue.serverTimestamp() })
       .then((res) => ({ data: res }))
       .catch((err) => err)
   }
@@ -232,7 +254,7 @@ class Firebase {
       .collection(collection)
       .doc(parentDoc)
       .collection(endCollection)
-      .add(docData)
+      .add({ ...docData, createdAt: app.firestore.FieldValue.serverTimestamp() })
   }
 
   setFBDoc = ({ parentCollection = 'users', doc, docData = {} } = {}) => {
@@ -288,6 +310,22 @@ class Firebase {
     return this.db
       .collection(parentCollection)
       .doc(doc)
+      .delete()
+      .then((res) => [null, res])
+      .catch((err) => [err])
+  }
+  deleteFBDocChild = ({ parentCollection, doc, childCollection, childDoc } = {}) => {
+    const [authError] = this.checkAuthorization()
+
+    if (authError) {
+      return [authError]
+    }
+
+    return this.db
+      .collection(parentCollection)
+      .doc(doc)
+      .collection(childCollection)
+      .doc(childDoc)
       .delete()
       .then((res) => [null, res])
       .catch((err) => [err])

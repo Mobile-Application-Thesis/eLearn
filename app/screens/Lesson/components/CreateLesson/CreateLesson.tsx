@@ -19,10 +19,7 @@ const CreateLesson: React.FC<CreateLessonProps> = ({ navigation, route }) => {
   const editorRef = useRef<any>()
   const [htmlText, setHtmlText] = useState('')
   const [containerSize, setContainerSize] = useState(0)
-  const [uploadProgress, setUploadProgress] = useState({
-    uploading: false,
-    progress: 0,
-  })
+
   const [action, setAction] = useState(false)
   const { navigate } = useNavigation()
   const { theme } = useTheme()
@@ -43,10 +40,10 @@ const CreateLesson: React.FC<CreateLessonProps> = ({ navigation, route }) => {
   })
 
   useEffect(() => {
-    if (!uploadProgress.uploading) {
-      PushNotification.removeAllDeliveredNotifications()
+    if (route.params.lessonDetails) {
+      editorRef.current?.insertHTML(route.params.lessonDetails.htmlContent)
     }
-  }, [uploadProgress])
+  }, [route])
 
   useEffect(() => {
     navigation.setOptions({
@@ -56,6 +53,7 @@ const CreateLesson: React.FC<CreateLessonProps> = ({ navigation, route }) => {
             navigate('Lesson Details', {
               htmlText: htmlText,
               classId: route.params.classId,
+              lessonDetails: route.params.lessonDetails,
             })
           }
           disabled={htmlText.length === 0}>
@@ -133,10 +131,7 @@ const CreateLesson: React.FC<CreateLessonProps> = ({ navigation, route }) => {
       mediaType: 'video',
       compressImageQuality: 0.5,
     }).then(({ mime, path }) => {
-      PushNotification.localNotification({
-        channelId: user.id,
-        message: 'Upload is in progress...',
-      })
+      SimpleToast.show('Upload is in progress...')
       const upload = storage()
         .ref(
           `users/${user.id}/uploads/lesson/${
@@ -149,18 +144,8 @@ const CreateLesson: React.FC<CreateLessonProps> = ({ navigation, route }) => {
       upload.on(
         'state_changed',
         (snapshot) => {
-          setUploadProgress({
-            uploading: true,
-            progress: Math.floor(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-            ),
-          })
           switch (snapshot.state) {
             case storage.TaskState.SUCCESS:
-              setUploadProgress({
-                uploading: false,
-                progress: 0,
-              })
               break
           }
         },

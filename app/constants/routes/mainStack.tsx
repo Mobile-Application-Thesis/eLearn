@@ -4,6 +4,7 @@ import Settings from '../../screens/Settings'
 import { CreateClass } from '../../screens/Class/components'
 import ClassroomTab from '../../routes/ClassroomTab'
 import { CreateLesson, LessonDetails } from './../../screens/Lesson/components'
+import LessonViewer from '../../screens/LessonViewer'
 
 const mainStack = [
   {
@@ -55,6 +56,13 @@ const mainStack = [
     options: {
       headerShown: true,
       headerTitle: 'Details',
+    },
+  },
+  {
+    name: 'Lesson Viewer',
+    component: LessonViewer,
+    options: {
+      headerShown: false,
     },
   },
 ]

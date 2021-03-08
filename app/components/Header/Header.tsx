@@ -5,7 +5,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
-import { IconSource } from 'react-native-paper/lib/typescript/components/Icon'
 import { Avatar, Text } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
 
@@ -15,7 +14,7 @@ import styles from './styles'
 interface Actions {
   style?: ViewStyle
   onPress?: (event: GestureResponderEvent) => void
-  icon: IconSource
+  icon: string
 }
 
 interface Props {
@@ -38,23 +37,9 @@ const Header: React.FC<Props> = ({ headerTitle, rightActions }) => {
       </View>
 
       <View style={styles.rightContainer}>
-        <TouchableOpacity onPress={() => navigate('Settings')}>
-          <Avatar.Icon
-            size={theme.icons.size.small}
-            color={theme.colors.primary}
-            icon="cog-outline"
-            style={[
-              styles.button,
-              {
-                backgroundColor: theme.colors.border,
-              },
-            ]}
-          />
-        </TouchableOpacity>
         {rightActions.map(({ style, onPress, icon, ...rest }) => (
-          <TouchableOpacity onPress={onPress}>
+          <TouchableOpacity key={icon} onPress={onPress}>
             <Avatar.Icon
-              key={`${icon}`}
               size={theme.icons.size.small}
               color={theme.colors.primary}
               style={[
@@ -69,6 +54,19 @@ const Header: React.FC<Props> = ({ headerTitle, rightActions }) => {
             />
           </TouchableOpacity>
         ))}
+        <TouchableOpacity onPress={() => navigate('Settings')}>
+          <Avatar.Icon
+            size={theme.icons.size.small}
+            color={theme.colors.primary}
+            icon="cog-outline"
+            style={[
+              styles.button,
+              {
+                backgroundColor: theme.colors.border,
+              },
+            ]}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   )

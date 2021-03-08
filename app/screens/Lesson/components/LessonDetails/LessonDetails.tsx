@@ -5,8 +5,10 @@ import {
   TouchableOpacity,
   BackHandler,
   Alert,
+  View,
 } from 'react-native'
 import { Text } from 'react-native-paper'
+import SimpleToast from 'react-native-simple-toast'
 import { Avatar } from 'react-native-paper'
 
 import { LessonDataTypes } from '../../../../constants/data'
@@ -18,14 +20,17 @@ import { useTheme } from './../../../../contexts/ThemeProvider'
 import styles from './styles'
 
 const LessonDetails: React.FC<LessonDetailsProps> = ({ navigation, route }) => {
+  const { attachments, classId, htmlText, ...rest } = route.params
   const { theme } = useTheme()
-  const [lessonTitle, setLessonTitle] = useState('')
+  const [lessonTitle, setLessonTitle] = useState(
+    route.params.lessonDetails?.title || '',
+  )
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => createLesson()}
+          onPress={route.params.lessonDetails ? updateLesson : createLesson}
           disabled={lessonTitle.length === 0}>
           <Text
             style={[
@@ -86,18 +91,35 @@ const LessonDetails: React.FC<LessonDetailsProps> = ({ navigation, route }) => {
   const createLesson = async () => {
     const toSave: LessonDataTypes = {
       title: lessonTitle || '',
-      htmlContent: route.params.htmlText || '',
-      attachments: [],
+      htmlContent: htmlText || '',
+      attachments: attachments || [],
       externalLinks: [],
       assessmentId: '',
     }
     await FirebaseService.addFBDocToChildDoc({
       collection: 'class',
       docData: toSave,
-      parentDoc: route.params.classId,
+      parentDoc: classId,
       endCollection: 'lesson',
     })
-
+    SimpleToast.show('Successfully created!')
+    navigation.navigate('Classroom')
+  }
+  const updateLesson = async () => {
+    const toSave: LessonDataTypes = {
+      ...route.params.lessonDetails,
+      title: lessonTitle || '',
+      htmlContent: htmlText || '',
+      assessmentId: '',
+    }
+    await FirebaseService.updateFBChildData({
+      collection: 'class',
+      values: toSave,
+      doc: classId,
+      childCollection: 'lesson',
+      childDoc: route.params.lessonDetails.lessonId,
+    })
+    SimpleToast.show('Successfully updated!')
     navigation.navigate('Classroom')
   }
 
@@ -113,12 +135,21 @@ const LessonDetails: React.FC<LessonDetailsProps> = ({ navigation, route }) => {
           color: theme.colors.text,
         }}
       />
-      {route.params.htmlText && (
+
+      {htmlText && (
         <>
-          <Text style={[styles.previewTitle, { marginBottom: 10 }]}>
+          <Text style={[styles.previewTitle, { marginBottom: 15 }]}>
             Content preview:
           </Text>
-          <HTMLView {...route.params} />
+          <HTMLView htmlText={htmlText} {...rest} />
+        </>
+      )}
+      {attachments && (
+        <>
+          <Text style={[styles.previewTitle, { marginBottom: 15 }]}>
+            Attachments:
+          </Text>
+          <View>{attachments.map(({ link }) => console.log(link))}</View>
         </>
       )}
     </ScrollView>

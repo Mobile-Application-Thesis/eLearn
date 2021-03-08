@@ -18,7 +18,7 @@ declare type Actions = {
 
 const MoreActions: React.FC<{
   actions: Actions[]
-  children: ({ openActions }: { openActions: () => void }) => React.Element
+  children: ({ openActions }: { openActions: () => void }) => React.ReactNode
 }> = ({ actions, children }) => {
   return (
     <ActionsModalProvider actions={actions}>

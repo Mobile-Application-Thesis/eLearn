@@ -1,5 +1,20 @@
 import { StackScreenProps } from '@react-navigation/stack'
+import { LessonDataTypes } from '../constants/data'
 import { User } from '../contexts/types'
+
+declare type Attachments = {
+  link: string
+  name: string
+  type: string
+}
+declare type lessonDetails = {
+  lessonId?: string
+  assessmentId?: string
+  attachments?: Attachments[]
+  externalLinks?: string[]
+  htmlContent?: string
+  title?: string
+}
 
 export declare type MainStackParamList = {
   Home: undefined
@@ -9,13 +24,15 @@ export declare type MainStackParamList = {
   Classroom: undefined
   'Create Lesson': {
     classId?: string
-    lessonId?: string
+    lessonDetails?: lessonDetails
   }
   'Lesson Details': {
     classId?: string
     htmlText?: string
-    attachments?: Array<string>
+    attachments?: Attachments[]
+    lessonDetails?: lessonDetails
   }
+  'Lesson Viewer': LessonDataTypes
 }
 
 export declare type HomeTabParamList = {
@@ -36,6 +53,10 @@ export declare type CreateLessonProps = StackScreenProps<
 export declare type LessonDetailsProps = StackScreenProps<
   MainStackParamList,
   'Lesson Details'
+>
+export declare type LessonViewerProps = StackScreenProps<
+  MainStackParamList,
+  'Lesson Viewer'
 >
 
 export declare type ClassroomTabContextTypes = {

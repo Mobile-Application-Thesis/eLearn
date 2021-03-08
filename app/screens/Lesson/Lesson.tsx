@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { FlatList, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 import DocumentPicker from 'react-native-document-picker'
+import storage from '@react-native-firebase/storage'
+import PushNotification from 'react-native-push-notification'
+import SimpleToast from 'react-native-simple-toast'
+import RNFetchBlob from 'rn-fetch-blob'
 
 import {
   Header,
@@ -21,23 +25,63 @@ interface Props {}
 
 const Lesson: React.FC<Props> = () => {
   const [lessons, setLessons] = useState<LessonDataTypes[]>()
-  const {
-    user: { role },
-  } = useAuth()
+  const { user } = useAuth()
   const { navigate } = useNavigation()
-  const { id, ...classDetails } = classParams()
+  const classDetails = classParams()
+
+  PushNotification.configure({
+    onNotification: (notification) => {
+      notification.finish()
+    },
+    popInitialNotification: true,
+    requestPermissions: true,
+  })
+  PushNotification.createChannel({
+    channelId: user.id,
+    channelName: `eLearn-${user.id}`,
+    importance: 4,
+  })
 
   const pickDocs = async () => {
     const document = await DocumentPicker.pick({
       type: [DocumentPicker.types.docx, DocumentPicker.types.pdf],
     })
-    console.info(document.uri, document.type, document.name, document.size)
+    const stat = await RNFetchBlob.fs.readFile(document.uri, 'base64')
+    const { name, type } = document
+    const upload = storage()
+      .ref(`users/${user.id}/uploads/documents/${Date.now() + '_' + name}`)
+      .putString(stat, 'base64')
+
+    SimpleToast.show('Upload inprogress!')
+    upload.on(
+      'state_changed',
+      (snapshot) => {
+        switch (snapshot.state) {
+          case storage.TaskState.SUCCESS:
+            break
+        }
+      },
+      () => {
+        SimpleToast.show('An error occured. please try again later.')
+      },
+      () => {
+        upload.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          PushNotification.localNotification({
+            channelId: user.id,
+            message: 'Upload success!',
+          })
+          navigate('Lesson Details', {
+            attachments: [{ link: downloadURL, name: name, type: type }],
+          })
+        })
+      },
+    )
   }
 
   useEffect(() => {
     const unsubscribe = FirebaseService.getFBCollectionFromChildData({
       parentCollection: 'class',
-      parentDoc: id,
+      parentDoc: classDetails.id,
       endCollection: 'lesson',
     }).onSnapshot((snapshot) => {
       var temp: LessonDataTypes[] = []
@@ -53,14 +97,15 @@ const Lesson: React.FC<Props> = () => {
   return (
     <View style={styles.root}>
       <Header />
-      {role === data.role.teacher && (
+      {user.role === data.role.teacher && (
         <MoreActions
           actions={[
             {
               key: 'create',
               shouldWait: false,
               label: 'Open Editor',
-              onPress: () => navigate('Create Lesson', { classId: id }),
+              onPress: () =>
+                navigate('Create Lesson', { classId: classDetails.id }),
               icon: {
                 name: 'file-document-edit-outline',
                 type: 'material-community',
@@ -91,7 +136,9 @@ const Lesson: React.FC<Props> = () => {
         ListEmptyComponent={
           <EmptyList title="You don't have any Lessons yet!" />
         }
-        renderItem={({ item }) => <LessonCard {...item} />}
+        renderItem={({ item }) => (
+          <LessonCard {...item} classId={classDetails.id} />
+        )}
       />
     </View>
   )

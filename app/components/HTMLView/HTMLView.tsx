@@ -9,7 +9,7 @@ import tagsStyles from './htmlStyles'
 import styles from './styles'
 
 interface Props {
-  htmlText?: string
+  htmlText: string
   containerStyle?: ViewStyle
   preview?: boolean
 }
