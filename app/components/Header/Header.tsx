@@ -20,9 +20,10 @@ interface Actions {
 interface Props {
   headerTitle?: string
   rightActions?: Actions[]
+  settings?: boolean
 }
 
-const Header: React.FC<Props> = ({ headerTitle, rightActions }) => {
+const Header: React.FC<Props> = ({ headerTitle, rightActions, settings }) => {
   const { theme } = useTheme()
   const { navigate } = useNavigation()
 
@@ -32,7 +33,7 @@ const Header: React.FC<Props> = ({ headerTitle, rightActions }) => {
         <Text
           onPress={() => (headerTitle ? null : navigate('Home'))}
           style={[styles.headerTitle, { color: theme.colors.primary }]}>
-          {headerTitle || 'E-Learn'}
+          {headerTitle}
         </Text>
       </View>
 
@@ -54,19 +55,21 @@ const Header: React.FC<Props> = ({ headerTitle, rightActions }) => {
             />
           </TouchableOpacity>
         ))}
-        <TouchableOpacity onPress={() => navigate('Settings')}>
-          <Avatar.Icon
-            size={theme.icons.size.small}
-            color={theme.colors.primary}
-            icon="cog-outline"
-            style={[
-              styles.button,
-              {
-                backgroundColor: theme.colors.border,
-              },
-            ]}
-          />
-        </TouchableOpacity>
+        {settings && (
+          <TouchableOpacity onPress={() => navigate('Settings')}>
+            <Avatar.Icon
+              size={theme.icons.size.small}
+              color={theme.colors.primary}
+              icon="cog-outline"
+              style={[
+                styles.button,
+                {
+                  backgroundColor: theme.colors.border,
+                },
+              ]}
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   )
@@ -74,6 +77,8 @@ const Header: React.FC<Props> = ({ headerTitle, rightActions }) => {
 
 Header.defaultProps = {
   rightActions: [],
+  headerTitle: 'E-Learn',
+  settings: true,
 }
 
 export default Header

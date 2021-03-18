@@ -134,7 +134,7 @@ const CreateLesson: React.FC<CreateLessonProps> = ({ navigation, route }) => {
       SimpleToast.show('Upload is in progress...')
       const upload = storage()
         .ref(
-          `users/${user.id}/uploads/lesson/${
+          `users/${user.id}/uploads/lesson/${Date.now()}-${
             path.split('/')[path.split('/').length - 1]
           }`,
         )

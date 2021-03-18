@@ -32,7 +32,7 @@ const MenuActions: React.FC<Props> = ({
             return (
               <Appbar.Action
                 onPress={openMenu}
-                color={theme.colors.facebook}
+                color={theme.colors.text}
                 icon="dots-vertical"
                 {...headerActionProps}
               />
@@ -43,7 +43,7 @@ const MenuActions: React.FC<Props> = ({
               <Icon
                 name="dots-vertical"
                 type="material-community"
-                color={iconColor || theme.colors.primary}
+                color={iconColor || theme.colors.text}
               />
             </TouchableOpacity>
           )

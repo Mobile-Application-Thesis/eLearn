@@ -33,6 +33,7 @@ export declare type MainStackParamList = {
     lessonDetails?: lessonDetails
   }
   'Lesson Viewer': LessonDataTypes
+  Assessment: undefined
 }
 
 export declare type HomeTabParamList = {

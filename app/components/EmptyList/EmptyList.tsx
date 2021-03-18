@@ -11,11 +11,12 @@ interface Props {
   title?: string
 }
 
-const EmptyList: React.FC<Props> = ({ image, title }) => {
+const EmptyList: React.FC<Props> = ({ image, title, children }) => {
   return (
     <View style={styles.root}>
       <Image source={image} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
+      {children}
     </View>
   )
 }

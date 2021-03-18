@@ -3,6 +3,7 @@ import { View, useWindowDimensions, ViewStyle } from 'react-native'
 import { Text } from 'react-native-paper'
 import HTML from 'react-native-render-html'
 import WebView from 'react-native-webview'
+import { IGNORED_TAGS } from 'react-native-render-html/src/HTMLUtils'
 
 import { useTheme } from './../../contexts/ThemeProvider'
 import tagsStyles from './htmlStyles'
@@ -77,6 +78,9 @@ const HTMLView: React.FC<Props> = ({
             </View>
           ),
         }}
+        ignoredTags={IGNORED_TAGS.filter(
+          (tag) => tag !== 'video' || tag !== 'pre' || tag !== 'blockquote',
+        )}
       />
     </View>
   )

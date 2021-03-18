@@ -30,7 +30,7 @@ const LessonCard: React.FC<Props> = ({
   const deleteLesson = () =>
     Alert.alert(
       title,
-      'Are you sure you want to delete this lesson? (assessment will be include)',
+      'Are you sure you? Assessment will be included. (If any)',
       [
         {
           text: 'Delete',

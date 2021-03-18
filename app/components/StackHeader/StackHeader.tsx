@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { TextInput, TextInputProps, TextStyle, ViewStyle } from 'react-native'
 import { Appbar } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
@@ -6,18 +6,20 @@ import { useNavigation } from '@react-navigation/core'
 import { useTheme } from '../../contexts/ThemeProvider'
 
 import styles from './styles'
-interface Actions {
-  icon?: string
-  iconColor?: string
-  onPress?: () => void
-  component?: React.ReactElement
-}
+declare type Actions =
+  | {
+      icon?: string
+      color?: string
+      onPress?: () => void
+    }
+  | ReactNode
 interface Props extends TextInputProps {
   headerTitle?: string
   headerTextInput?: boolean
   textInputContainerStyle?: TextStyle
   containerStyle?: ViewStyle
-  rightActions?: Actions[]
+  rightAction?: Actions[] | ReactNode
+  backHandler?: () => void
 }
 
 const StackHeader: React.FC<Props> = ({
@@ -25,7 +27,8 @@ const StackHeader: React.FC<Props> = ({
   headerTextInput,
   textInputContainerStyle,
   containerStyle,
-  rightActions = [],
+  rightAction = [],
+  backHandler,
   ...rest
 }) => {
   const { goBack } = useNavigation()
@@ -36,12 +39,15 @@ const StackHeader: React.FC<Props> = ({
       style={[{ backgroundColor: theme.colors.background }, containerStyle]}>
       <Appbar.Action
         icon="arrow-left"
-        onPress={goBack}
-        color={theme.colors.primary}
+        onPress={() => {
+          if (backHandler) return backHandler()
+          goBack()
+        }}
+        color={theme.colors.text}
       />
 
       {!headerTextInput ? (
-        <Appbar.Content title={headerTitle} color={theme.colors.primary} />
+        <Appbar.Content title={headerTitle} color={theme.colors.text} />
       ) : (
         <TextInput
           placeholder="Search"
@@ -49,24 +55,27 @@ const StackHeader: React.FC<Props> = ({
           autoFocus
           style={[
             styles.textInput,
-            { color: theme.colors.primary },
+            { color: theme.colors.text },
             textInputContainerStyle,
           ]}
           {...rest}
         />
       )}
-      {rightActions.map(({ onPress, icon, iconColor, component }) => {
-        if (component) return component
+      {Array.isArray(rightAction)
+        ? rightAction.map((action) => {
+            if (action.icon)
+              return (
+                <Appbar.Action
+                  key={action.icon}
+                  icon={action.icon}
+                  color={theme.colors.text}
+                  {...action}
+                />
+              )
 
-        return (
-          <Appbar.Action
-            key={icon}
-            icon={icon}
-            onPress={onPress}
-            color={iconColor || theme.colors.primary}
-          />
-        )
-      })}
+            return action()
+          })
+        : rightAction()}
     </Appbar.Header>
   )
 }
