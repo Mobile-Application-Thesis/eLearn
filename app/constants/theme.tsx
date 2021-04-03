@@ -20,6 +20,7 @@ const DefaultTheme = {
     background: '#fff',
     code: '#f0f0f0',
     blockquote: '#ddd',
+    aqua: '#4bfefe',
   },
   icons: {
     size: {
@@ -40,6 +41,7 @@ const DarkTheme = {
     background: '#212121',
     code: '#2a3836',
     blockquote: '#ddd',
+    aqua: '#4bfefe',
   },
   icons: {
     size: {

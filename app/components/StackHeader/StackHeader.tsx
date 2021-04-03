@@ -63,7 +63,7 @@ const StackHeader: React.FC<Props> = ({
       )}
       {Array.isArray(rightAction)
         ? rightAction.map((action) => {
-            if (action.icon)
+            if (typeof action === 'object')
               return (
                 <Appbar.Action
                   key={action.icon}
@@ -72,7 +72,6 @@ const StackHeader: React.FC<Props> = ({
                   {...action}
                 />
               )
-
             return action()
           })
         : rightAction()}

@@ -20,4 +20,13 @@ export declare type LessonDataTypes = {
   id?: string
 }
 
+export declare type ExamForm = {
+  id?: number
+  question?: string
+  type?: 'mc' | 't/f' | string
+  choices?: string[]
+  answer?: string[]
+  image?: string
+}
+
 export default data

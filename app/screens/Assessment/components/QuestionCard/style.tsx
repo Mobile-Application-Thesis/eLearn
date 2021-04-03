@@ -2,29 +2,14 @@ import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native'
 
 interface Styles {
   root: ViewStyle
-  button: TextStyle
-  footer: ViewStyle
-  padd: ViewStyle
   row: ViewStyle
   textInput: ViewStyle
   radio: ImageStyle
+  addItem: TextStyle
 }
 
 export default StyleSheet.create<Styles>({
   root: {
-    flex: 1,
-  },
-  button: {
-    textTransform: 'uppercase',
-    marginRight: 20,
-    fontWeight: '700',
-  },
-  footer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 20,
-  },
-  padd: {
     paddingHorizontal: 10,
   },
   row: {
@@ -32,11 +17,19 @@ export default StyleSheet.create<Styles>({
     alignItems: 'center',
   },
   textInput: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
+    marginTop: 0,
+    marginLeft: -10,
+    backgroundColor: 'transparent',
+    width: '100%',
   },
   radio: {
     height: 20,
     width: 20,
     marginRight: 10,
+  },
+  addItem: {
+    paddingVertical: 5,
+    marginLeft: 5,
   },
 })

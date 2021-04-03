@@ -11,6 +11,7 @@ import { useTheme } from './../../contexts/ThemeProvider'
 
 interface Props {
   actions: MenuActionType[]
+  icon?: string
   iconColor?: string
   key?: string
   isHeaderAction?: boolean
@@ -20,6 +21,7 @@ interface Props {
 const MenuActions: React.FC<Props> = ({
   actions,
   iconColor,
+  icon,
   isHeaderAction,
   headerActionProps,
 }) => {
@@ -33,7 +35,7 @@ const MenuActions: React.FC<Props> = ({
               <Appbar.Action
                 onPress={openMenu}
                 color={theme.colors.text}
-                icon="dots-vertical"
+                icon={icon}
                 {...headerActionProps}
               />
             )
@@ -41,7 +43,7 @@ const MenuActions: React.FC<Props> = ({
           return (
             <TouchableOpacity onPress={openMenu}>
               <Icon
-                name="dots-vertical"
+                name={icon}
                 type="material-community"
                 color={iconColor || theme.colors.text}
               />
@@ -51,6 +53,10 @@ const MenuActions: React.FC<Props> = ({
       </MenuContext.Consumer>
     </MenuProvider>
   )
+}
+
+MenuActions.defaultProps = {
+  icon: 'dots-vertical',
 }
 
 export default MenuActions

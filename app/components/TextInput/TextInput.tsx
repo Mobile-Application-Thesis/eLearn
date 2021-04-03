@@ -1,23 +1,22 @@
 import React, { useRef, useState } from 'react'
 import {
   TextInput as Text,
-  TextInputProps,
   TouchableWithoutFeedback,
   View,
   ViewProps,
   ViewStyle,
 } from 'react-native'
-import { Icon } from 'react-native-elements'
+import { Icon, IconProps } from 'react-native-elements'
 
 import { useTheme } from '../../contexts/ThemeProvider'
 
 import styles from './styles'
 
-interface Props extends React.Component<TextInputProps> {
+interface Props {
   containerProps?: ViewProps
   containerStyle?: ViewStyle
   textInputStyle?: object
-  rightIcon?
+  rightIcon?: IconProps
   leftIcon?
   multiline?: boolean
 }
@@ -65,7 +64,7 @@ const TextInput = ({
           multiline={multiline}
           {...rest}
         />
-        <View style={{ paddingTop: multiline ? 8 : 0 }}>
+        <View style={{ paddingTop: multiline ? 14 : 0 }}>
           <Icon {...rightIcon} />
         </View>
       </View>

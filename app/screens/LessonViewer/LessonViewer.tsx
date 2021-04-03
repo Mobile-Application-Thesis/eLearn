@@ -63,9 +63,7 @@ const LessonViewer: React.FC<LessonViewerProps> = ({
 
   const headerProps = {
     headerTitle: title,
-    rightAction: () => (
-      <MenuActions key={id} actions={action} isHeaderAction={true} />
-    ),
+    rightAction: () => <MenuActions actions={action} isHeaderAction={true} />,
   }
 
   return (
