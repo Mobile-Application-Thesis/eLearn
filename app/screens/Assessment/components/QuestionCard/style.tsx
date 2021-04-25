@@ -4,15 +4,18 @@ interface Styles {
   root: ViewStyle
   row: ViewStyle
   textInput: ViewStyle
+  text: ViewStyle
   radio: ImageStyle
   addItem: TextStyle
 }
 
 export default StyleSheet.create<Styles>({
   root: {
+    flex: 1,
     paddingHorizontal: 10,
   },
   row: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -21,7 +24,13 @@ export default StyleSheet.create<Styles>({
     marginTop: 0,
     marginLeft: -10,
     backgroundColor: 'transparent',
-    width: '100%',
+  },
+  text: {
+    marginTop: 8,
+    marginLeft: 5,
+    backgroundColor: 'transparent',
+    textAlign: 'justify',
+    width: '90%',
   },
   radio: {
     height: 20,

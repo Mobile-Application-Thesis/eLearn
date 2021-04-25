@@ -78,9 +78,7 @@ const HTMLView: React.FC<Props> = ({
             </View>
           ),
         }}
-        ignoredTags={IGNORED_TAGS.filter(
-          (tag) => tag !== 'video' || tag !== 'pre' || tag !== 'blockquote',
-        )}
+        ignoredTags={IGNORED_TAGS.filter((tag) => tag !== 'video')}
       />
     </View>
   )

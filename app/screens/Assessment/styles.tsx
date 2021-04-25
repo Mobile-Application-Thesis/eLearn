@@ -16,13 +16,16 @@ export default StyleSheet.create<Styles>({
   },
   button: {
     textTransform: 'uppercase',
-    marginRight: 20,
     fontWeight: '700',
   },
   footer: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 20,
+    borderWidth: 0.5,
+    borderRadius: 5,
+    marginHorizontal: 20,
+    marginTop: 15,
+    paddingVertical: 5,
   },
   padd: {
     paddingHorizontal: 10,

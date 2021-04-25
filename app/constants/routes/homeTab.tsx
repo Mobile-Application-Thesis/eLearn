@@ -13,17 +13,17 @@ const homeTab = [
       },
     },
   },
-  {
-    name: 'Discover',
-    component: Discover,
-    options: {
-      icon: {
-        name: 'compass',
-        type: 'font-awesome-5',
-        size: 25,
-      },
-    },
-  },
+  // {
+  //   name: 'Discover',
+  //   component: Discover,
+  //   options: {
+  //     icon: {
+  //       name: 'compass',
+  //       type: 'font-awesome-5',
+  //       size: 25,
+  //     },
+  //   },
+  // },
 ]
 
 export default homeTab

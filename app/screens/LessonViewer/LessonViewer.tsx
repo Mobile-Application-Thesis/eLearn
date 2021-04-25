@@ -9,10 +9,11 @@ import { useAuth } from '../../contexts/AuthProvider'
 import data from '../../constants/data'
 import MenuActions from '../../components/MenuActions'
 import { useNavigation } from '@react-navigation/core'
+import { FirebaseService } from '../../services/firebase.services'
 
 const LessonViewer: React.FC<LessonViewerProps> = ({
   route: {
-    params: { htmlContent, title, assessmentId, id },
+    params: { htmlContent, title, assessmentId, id, classId },
   },
 }) => {
   const { theme } = useTheme()
@@ -35,7 +36,7 @@ const LessonViewer: React.FC<LessonViewerProps> = ({
       setAction((prevState) => [
         ...prevState,
         {
-          onPress: () => navigate('Assessment'),
+          onPress: () => navigate('Assessment', { lessonId: id, classId }),
           title: 'Add Exam',
           icon: 'text-box-plus-outline',
         },
@@ -44,7 +45,12 @@ const LessonViewer: React.FC<LessonViewerProps> = ({
       setAction((prevState) => [
         ...prevState,
         {
-          onPress: () => navigate('Assessment'),
+          onPress: () =>
+            navigate('Assessment', {
+              lessonId: id,
+              classId: classId,
+              assessmentId: assessmentId,
+            }),
           title: 'Edit Exam',
           icon: 'text-box-plus-outline',
         },
@@ -53,7 +59,12 @@ const LessonViewer: React.FC<LessonViewerProps> = ({
       setAction((prevState) => [
         ...prevState,
         {
-          onPress: () => navigate('Assessment'),
+          onPress: () =>
+            navigate('Assessment', {
+              lessonId: id,
+              classId: classId,
+              assessmentId: assessmentId,
+            }),
           title: 'Take Exam',
           icon: 'text-box-plus-outline',
         },

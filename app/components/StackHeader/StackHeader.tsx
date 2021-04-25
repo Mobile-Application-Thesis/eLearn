@@ -1,5 +1,11 @@
 import React, { ReactNode } from 'react'
-import { TextInput, TextInputProps, TextStyle, ViewStyle } from 'react-native'
+import {
+  TextInput,
+  TextInputProps,
+  TextStyle,
+  ViewStyle,
+  View,
+} from 'react-native'
 import { Appbar } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/core'
 
@@ -62,7 +68,7 @@ const StackHeader: React.FC<Props> = ({
         />
       )}
       {Array.isArray(rightAction)
-        ? rightAction.map((action) => {
+        ? rightAction.map((action, index) => {
             if (typeof action === 'object')
               return (
                 <Appbar.Action
@@ -72,7 +78,7 @@ const StackHeader: React.FC<Props> = ({
                   {...action}
                 />
               )
-            return action()
+            return <View key={index + ''}>{action()}</View>
           })
         : rightAction()}
     </Appbar.Header>

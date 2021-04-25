@@ -18,6 +18,7 @@ export declare type LessonDataTypes = {
   htmlContent: string
   title: string
   id?: string
+  classId?: string
 }
 
 export declare type ExamForm = {
@@ -26,7 +27,7 @@ export declare type ExamForm = {
   type?: 'mc' | 't/f' | string
   choices?: string[]
   answer?: string[]
-  image?: string
+  image?: string[]
 }
 
 export default data

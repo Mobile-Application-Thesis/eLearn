@@ -33,7 +33,12 @@ export declare type MainStackParamList = {
     lessonDetails?: lessonDetails
   }
   'Lesson Viewer': LessonDataTypes
-  Assessment: undefined
+  Assessment: {
+    classId?: string
+    lessonId?: string
+    assessment?: any
+    assessmentId?: string
+  }
 }
 
 export declare type HomeTabParamList = {
@@ -58,6 +63,10 @@ export declare type LessonDetailsProps = StackScreenProps<
 export declare type LessonViewerProps = StackScreenProps<
   MainStackParamList,
   'Lesson Viewer'
+>
+export declare type AssessmentProps = StackScreenProps<
+  MainStackParamList,
+  'Assessment'
 >
 
 export declare type ClassroomTabContextTypes = {

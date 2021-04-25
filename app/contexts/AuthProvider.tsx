@@ -2,10 +2,10 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import SimpleToast from 'react-native-simple-toast'
 
 import { FirebaseService } from '../services/firebase.services'
-import ErrorHandler from '../utils/errorHandler'
 import { useAsyncStorage } from '../hooks'
 import { useProfile } from '../hooks'
 import { AuthContextTypes } from './types'
+import { errorHandler } from '../utils'
 
 const AuthContext = createContext<AuthContextTypes>({})
 
@@ -51,7 +51,7 @@ const AuthProvider = ({ children }) => {
     setInitializing(false)
 
     if (!response.user) {
-      ErrorHandler(response)
+      errorHandler(response)
     } else {
       SimpleToast.show(`Welcome back ${response.user.displayName}!`)
     }
@@ -80,7 +80,7 @@ const AuthProvider = ({ children }) => {
     setInitializing(false)
 
     if (!response.user) {
-      return ErrorHandler(response)
+      return errorHandler(response)
     }
     setUser(response.user.uid)
   }

@@ -17,6 +17,7 @@ import { ClassHeader, LessonCard } from './components'
 
 import { FirebaseService } from './../../services/firebase.services'
 import { useAuth } from '../../contexts/AuthProvider'
+import { useTheme } from '../../contexts/ThemeProvider'
 import data, { LessonDataTypes } from './../../constants/data'
 import styles from './styles'
 import { classParams } from '../../routes/ClassroomTab'
@@ -26,6 +27,7 @@ interface Props {}
 const Lesson: React.FC<Props> = () => {
   const [lessons, setLessons] = useState<LessonDataTypes[]>()
   const { user } = useAuth()
+  const { theme } = useTheme()
   const { navigate } = useNavigation()
   const classDetails = classParams()
 
@@ -83,13 +85,15 @@ const Lesson: React.FC<Props> = () => {
       parentCollection: 'class',
       parentDoc: classDetails.id,
       endCollection: 'lesson',
-    }).onSnapshot((snapshot) => {
-      var temp: LessonDataTypes[] = []
-      snapshot.forEach((doc) => {
-        temp.push({ id: doc.id, ...doc.data() })
-      })
-      setLessons(temp)
     })
+      .orderBy('createdAt', 'asc')
+      .onSnapshot((snapshot) => {
+        var temp: LessonDataTypes[] = []
+        snapshot.forEach((doc) => {
+          temp.push({ id: doc.id, ...doc.data() })
+        })
+        setLessons(temp)
+      })
 
     return unsubscribe
   }, [])
@@ -123,7 +127,14 @@ const Lesson: React.FC<Props> = () => {
             },
           ]}>
           {({ openActions }) => (
-            <FloatingButton name="Create Lesson" onPress={openActions} />
+            <FloatingButton
+              name="Create Lesson"
+              onPress={openActions}
+              containerStyle={{
+                borderWidth: 0.5,
+                borderColor: theme.colors.background,
+              }}
+            />
           )}
         </MoreActions>
       )}

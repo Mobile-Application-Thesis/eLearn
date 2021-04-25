@@ -13,6 +13,9 @@ import { useAuth } from '../../contexts/AuthProvider'
 import { ExamForm } from '../../constants/data'
 import { QuestionCard } from './components'
 import MenuActions from '../../components/MenuActions'
+import { FirebaseService } from '../../services/firebase.services'
+import { AssessmentProps } from '../../routes/types'
+import data from './../../constants/data'
 
 const AddButton: React.FC<{ addQuestion: () => void; title?: string }> = ({
   addQuestion,
@@ -41,14 +44,23 @@ AddButton.defaultProps = {
   title: 'Add Question',
 }
 
-const Assessment: React.FC = () => {
+interface TempExamForm extends ExamForm {
+  tempAnswer?: string[]
+}
+
+const Assessment: React.FC<AssessmentProps> = ({
+  route: {
+    params: { classId, lessonId, assessmentId },
+  },
+}) => {
   const { goBack } = useNavigation()
   const { user } = useAuth()
+  const { theme } = useTheme()
 
   const checked = 'check-box-outline'
   const unchecked = 'checkbox-blank-outline'
 
-  const [examForm, setExamForm] = useState<ExamForm[]>([])
+  const [examForm, setExamForm] = useState<TempExamForm[]>([])
 
   const [questionType, setQuestionType] = useState('t/f')
 
@@ -65,6 +77,20 @@ const Assessment: React.FC = () => {
     },
   ])
 
+  useEffect(() => {
+    if (assessmentId) {
+      FirebaseService.db
+        .collection('class')
+        .doc(classId)
+        .collection('assessment')
+        .doc(assessmentId)
+        .get()
+        .then((doc) => {
+          setExamForm(doc.data().data)
+        })
+    }
+  }, [assessmentId])
+
   const addQuestion = () => {
     let choices = []
     if (questionType === 'mc') {
@@ -80,7 +106,7 @@ const Assessment: React.FC = () => {
         type: questionType,
         choices: choices,
         answer: [],
-        image: '',
+        image: [],
       },
     ])
   }
@@ -101,50 +127,62 @@ const Assessment: React.FC = () => {
     }
   }, [questionType])
 
-  const headerProps = {
-    headerTitle: 'Create Exam',
-    rightAction: [
-      {
-        onPress: () =>
-          Alert.alert(
-            'Usage',
-            // eslint-disable-next-line quotes
-            `\n1. You can add new question tapping the 'plus' icon on the header.\n\n2. You can change the question type of the question you will be adding by tapping the 'question' icon then choose your desired question type. Question type is set to true or false by default.\n\n3. By tapping the radio button beside an item in a question, it will be set as the answer to that question.\n\n4. For multiple choices type of question, you cannot set an item as an answer if i doesn't have any value.`,
-            [{ text: 'Ok' }],
-          ),
-        icon: 'information-variant',
-        type: 'material-community',
-      },
-      () => (
-        <MenuActions
-          actions={actions}
-          isHeaderAction={true}
-          icon="lock-question"
-        />
-      ),
-      {
-        onPress: addQuestion,
-        icon: 'plus',
-        type: 'material-community',
-      },
-    ],
-    backHandler: () => {
-      if (examForm.length !== 0) {
-        return Alert.alert('Discard changes?', 'Are you sure?', [
-          {
-            text: 'Discard',
-            style: 'destructive',
-            onPress: () => goBack(),
-          },
-          {
-            text: 'Cancel',
-          },
-        ])
-      }
+  const headerProps =
+    user.role === data.role.teacher
+      ? {
+          headerTitle: 'Create Exam',
+          rightAction: [
+            {
+              onPress: () =>
+                Alert.alert(
+                  'Usage',
+                  // eslint-disable-next-line quotes
+                  `\n1. You can add new question tapping the 'plus' icon on the header.\n\n2. You can change the question type of the question you will be adding by tapping the 'question' icon then choose your desired question type. Question type is set to true or false by default.\n\n3. By tapping the radio button beside an item in a question, it will be set as the answer to that question.\n\n4. For multiple choices type of question, you cannot set an item as an answer if it doesn't have any value.`,
+                  [{ text: 'Ok' }],
+                ),
+              icon: 'information-variant',
+              type: 'material-community',
+            },
+            () => (
+              <MenuActions
+                actions={actions}
+                isHeaderAction={true}
+                icon="lock-question"
+              />
+            ),
+            {
+              onPress: addQuestion,
+              icon: 'plus',
+              type: 'material-community',
+            },
+          ],
+          backHandler: () => {
+            if (examForm.length !== 0) {
+              return Alert.alert('Discard changes?', 'Are you sure?', [
+                {
+                  text: 'Discard',
+                  style: 'destructive',
+                  onPress: () => goBack(),
+                },
+                {
+                  text: 'Cancel',
+                },
+              ])
+            }
 
-      goBack()
-    },
-  }
+            goBack()
+          },
+        }
+      : {
+          headerTitle: 'Assessment',
+          rightAction: () => {
+            return (
+              <TouchableOpacity style={{ marginRight: 10 }}>
+                <Text>SUBMIT</Text>
+              </TouchableOpacity>
+            )
+          },
+        }
 
   const addImage = () => {
     ImagePicker.openPicker({
@@ -199,6 +237,7 @@ const Assessment: React.FC = () => {
       if (item.question) prevState[index].question = item.question
 
       if (item.answer) prevState[index].answer = item.answer
+      if (item.tempAnswer) prevState[index].tempAnswer = item.tempAnswer
 
       if (item.addItemChoices)
         prevState[index].choices = [...prevState[index].choices, '']
@@ -209,6 +248,81 @@ const Assessment: React.FC = () => {
 
       return [...prevState]
     })
+  }
+
+  const onSave = async () => {
+    let questionError = false
+    let choicesEmpty = false
+    let choicesError = false
+    let answerError = false
+    examForm.map(({ question, choices, answer }) => {
+      if (!question) questionError = true
+
+      if (choices.length === 0) choicesEmpty = true
+
+      if (answer.length === 0) answerError = true
+
+      choices.map((item) => {
+        if (item === '') choicesError = true
+      })
+    })
+
+    if (questionError)
+      return SimpleToast.show('All questions must not be empty!')
+
+    if (choicesEmpty)
+      return SimpleToast.show('Question choices must not be empty!')
+
+    if (choicesError)
+      return SimpleToast.show('Question choices must have a value!')
+
+    if (answerError)
+      return SimpleToast.show('All questions must have an answer!')
+
+    let data
+    if (!!assessmentId) {
+      await FirebaseService.updateFBChildData({
+        collection: 'class',
+        values: { data: examForm },
+        doc: classId,
+        childCollection: 'assessment',
+        childDoc: assessmentId,
+      })
+    } else {
+      data = await FirebaseService.addFBDocToChildDoc({
+        collection: 'class',
+        docData: { data: examForm },
+        parentDoc: classId,
+        endCollection: 'assessment',
+      })
+    }
+
+    await FirebaseService.updateFBChildData({
+      collection: 'class',
+      values: { assessmentId: assessmentId || data.id },
+      doc: classId,
+      childCollection: 'lesson',
+      childDoc: lessonId,
+    })
+
+    if (!!assessmentId) {
+      SimpleToast.show('Successfully edited!')
+    } else {
+      SimpleToast.show('Successfully created!')
+    }
+    goBack()
+  }
+
+  const onSubmit = () => {}
+
+  const Footer = () => {
+    return (
+      <TouchableOpacity
+        style={[styles.footer, { backgroundColor: theme.colors.facebook }]}
+        onPress={onSave}>
+        <Text style={[styles.button, { color: theme.colors.white }]}>Save</Text>
+      </TouchableOpacity>
+    )
   }
 
   return (
@@ -222,6 +336,9 @@ const Assessment: React.FC = () => {
         renderItem={({ item, index }) => (
           <QuestionCard {...item} index={index} setItem={setItem} />
         )}
+        ListFooterComponent={
+          examForm.length !== 0 && user.role === data.role.teacher && <Footer />
+        }
       />
     </View>
   )

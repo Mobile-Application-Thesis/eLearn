@@ -10,8 +10,8 @@ import { useAuth } from '../../../../contexts/AuthProvider'
 import { StackHeader } from '../../../../components'
 import { TextInput, Button } from '../../../../components'
 import { CreateClassForm } from '../../../../constants/forms'
-import ErrorHandler from '../../../../utils/errorHandler'
 import styles from './styles'
+import { errorHandler } from '../../../../utils'
 
 const CreateClass = () => {
   const [formInput, setFormInput] = useState<{
@@ -42,7 +42,7 @@ const CreateClass = () => {
     })
 
     if (!response.data) {
-      return ErrorHandler(response)
+      return errorHandler(response)
     }
     SimpleToast.show(`Created class ${formInput.name}`)
     goBack()

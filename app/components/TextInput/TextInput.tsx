@@ -15,7 +15,7 @@ import styles from './styles'
 interface Props {
   containerProps?: ViewProps
   containerStyle?: ViewStyle
-  textInputStyle?: object
+  textInputStyle?: ViewStyle
   rightIcon?: IconProps
   leftIcon?
   multiline?: boolean
@@ -43,13 +43,16 @@ const TextInput = ({
           containerStyle,
           {
             alignItems: multiline ? 'flex-start' : 'center',
+            justifyContent: 'space-between',
           },
         ]}
         {...containerProps}>
-        <Icon
-          onLayout={(e) => setLeftIconSize(e.nativeEvent.layout.width)}
-          {...leftIcon}
-        />
+        {leftIcon && (
+          <Icon
+            onLayout={(e) => setLeftIconSize(e.nativeEvent.layout.width)}
+            {...leftIcon}
+          />
+        )}
         <Text
           ref={textInput}
           placeholderTextColor={theme.colors.primary}

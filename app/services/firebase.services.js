@@ -391,7 +391,7 @@ class Firebase {
   }
 }
 const TEMPORARY_AVATAR =
-  'https://firebasestorage.googleapis.com/v0/b/loanpalz/o/static%2Fprofile-default.jpg?alt=media'
+  'https://firebasestorage.googleapis.com/v0/b/elearn-13cae.appspot.com/o/default_profile_img.jpg?alt=media&token=03b38f16-5f4c-4763-a5f2-be2d76a652a7'
 
 export const FirebaseService = new Firebase()
 export default app

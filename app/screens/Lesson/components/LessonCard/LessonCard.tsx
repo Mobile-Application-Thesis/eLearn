@@ -68,6 +68,7 @@ const LessonCard: React.FC<Props> = ({
           id: id,
           title: title,
           htmlContent: htmlContent,
+          classId: classId,
           ...rest,
         })
       }>

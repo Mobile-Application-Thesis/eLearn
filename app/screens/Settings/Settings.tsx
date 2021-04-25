@@ -1,8 +1,9 @@
 import React from 'react'
 import { Alert, FlatList, View } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
 import { Avatar, Text } from 'react-native-paper'
 
-import { StackHeader } from '../../components'
+import { Button, StackHeader } from '../../components'
 import { useAuth } from '../../contexts/AuthProvider'
 import { useTheme } from '../../contexts/ThemeProvider'
 import { SettingsButton } from './components'
@@ -11,6 +12,7 @@ import styles from './styles'
 const Settings: React.FC = () => {
   const { user, signOut } = useAuth()
   const { darkMode, toggleDarkMode, theme } = useTheme()
+  const { navigate } = useNavigation()
   const flatListData = [
     {
       key: 'darkMode',
@@ -22,15 +24,6 @@ const Settings: React.FC = () => {
       switchButton: true,
       value: darkMode,
       onPress: toggleDarkMode,
-    },
-    {
-      key: 'profile',
-      label: 'Profile',
-      icon: 'account',
-      iconStyle: {
-        backgroundColor: theme.colors.border,
-      },
-      onPress: Function.prototype,
     },
     {
       key: 'term&cond',
@@ -91,13 +84,32 @@ const Settings: React.FC = () => {
         contentContainerStyle={{ flexGrow: 1 }}
         ListHeaderComponent={() => (
           <View style={styles.profileContainer}>
-            <Avatar.Icon
-              size={100}
-              icon="bookshelf"
+            {user.avatar ? (
+              <Avatar.Image size={100} source={{ uri: user.avatar }} />
+            ) : (
+              <Avatar.Icon
+                size={100}
+                icon="bookshelf"
+                style={{
+                  backgroundColor: '#2f426f',
+                }}
+              />
+            )}
+            <Button
+              onPress={() => navigate('Edit Profile')}
               style={{
-                backgroundColor: '#2f426f',
-              }}
-            />
+                marginTop: -30,
+                marginRight: -60,
+              }}>
+              <Avatar.Icon
+                size={30}
+                icon="pencil-outline"
+                color={theme.colors.primary}
+                style={{
+                  backgroundColor: theme.colors.border,
+                }}
+              />
+            </Button>
             <Text style={styles.profileText}>{user.fullName}</Text>
             <Text>{user.email}</Text>
           </View>

@@ -31,7 +31,7 @@ const Header: React.FC<Props> = ({ headerTitle, rightActions, settings }) => {
     <View style={[styles.root, { backgroundColor: theme.colors.background }]}>
       <View style={styles.leftContainer}>
         <Text
-          onPress={() => (headerTitle ? null : navigate('Home'))}
+          onPress={() => navigate('Home')}
           style={[styles.headerTitle, { color: theme.colors.primary }]}>
           {headerTitle}
         </Text>

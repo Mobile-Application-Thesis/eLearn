@@ -6,6 +6,7 @@ import ClassroomTab from '../../routes/ClassroomTab'
 import { CreateLesson, LessonDetails } from './../../screens/Lesson/components'
 import LessonViewer from '../../screens/LessonViewer'
 import Assessment from '../../screens/Assessment'
+import { EditProfile } from '../../screens/Profile/components'
 
 const mainStack = [
   {
@@ -69,6 +70,13 @@ const mainStack = [
   {
     name: 'Assessment',
     component: Assessment,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: 'Edit Profile',
+    component: EditProfile,
     options: {
       headerShown: false,
     },

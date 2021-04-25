@@ -22,51 +22,52 @@ const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
         paddingBottom: 2,
         backgroundColor: theme.colors.background,
       }}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key]
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name
+      {state.routes.length > 1 &&
+        state.routes.map((route, index) => {
+          const { options } = descriptors[route.key]
+          const label =
+            options.tabBarLabel !== undefined
+              ? options.tabBarLabel
+              : options.title !== undefined
+              ? options.title
+              : route.name
 
-        const isFocused = state.index === index
+          const isFocused = state.index === index
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          })
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            })
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name)
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name)
+            }
           }
-        }
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          })
-        }
+          const onLongPress = () => {
+            navigation.emit({
+              type: 'tabLongPress',
+              target: route.key,
+            })
+          }
 
-        return (
-          <Pressable
-            key={label}
-            android_ripple={{
-              radius: Math.round(width / (state.routes.length + 2) + 4),
-              borderless: true,
-            }}
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ flex: 1, alignItems: 'center', paddingTop: 5 }}>
-            <>
-              {/* <View
+          return (
+            <Pressable
+              key={label}
+              android_ripple={{
+                radius: Math.round(width / (state.routes.length + 2) + 4),
+                borderless: true,
+              }}
+              accessibilityState={isFocused ? { selected: true } : {}}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+              testID={options.tabBarTestID}
+              onPress={onPress}
+              onLongPress={onLongPress}
+              style={{ flex: 1, alignItems: 'center', paddingTop: 5 }}>
+              <>
+                {/* <View
                 style={[
                   styles.badgeContainer,
                   { backgroundColor: theme.colors.background },
@@ -85,25 +86,25 @@ const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
                   9
                 </Text>
               </View> */}
-              {options.icon && (
-                <Icon
-                  {...options.icon}
-                  color={isFocused ? theme.colors.primary : '#737373'}
-                />
-              )}
-              <Text
-                style={[
-                  {
-                    color: isFocused ? theme.colors.primary : '#737373',
-                  },
-                  styles.label,
-                ]}>
-                {label}
-              </Text>
-            </>
-          </Pressable>
-        )
-      })}
+                {options.icon && (
+                  <Icon
+                    {...options.icon}
+                    color={isFocused ? theme.colors.primary : '#737373'}
+                  />
+                )}
+                <Text
+                  style={[
+                    {
+                      color: isFocused ? theme.colors.primary : '#737373',
+                    },
+                    styles.label,
+                  ]}>
+                  {label}
+                </Text>
+              </>
+            </Pressable>
+          )
+        })}
     </View>
   )
 }
